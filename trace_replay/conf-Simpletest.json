@@ -1,0 +1,122 @@
+{
+	"MOUNT_DIR": "data",
+	"INIT_FILEMAP": "init-file/180820_init",
+	"MULTIMEDIA":
+	{
+		"CAMERA":
+		{
+			"NAME": "camera",
+			"MULTIMEDIA_PATH": "data/media/0/DCIM/Camera",
+			"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":0.5, "MAX_SIZE":4, "INIT_COUNT": 0
+		},
+		"OTHERS":
+		[
+			{
+				"NAME": "movie", "MULTIMEDIA_PATH": "data/media/0/movie/",
+				"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":2048, "MAX_SIZE":2048, "INIT_COUNT": 0
+			},
+			{
+				"NAME": "music", "MULTIMEDIA_PATH": "data/media/0/music/",
+				"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":4, "MAX_SIZE":12, "INIT_COUNT": 0
+			}
+		]
+	},
+	"BASIC_APP":
+	{
+		"DEFAULT_UPDATE_CYCLE": 7,
+		"DEFAULT_LOADING_CYCLE": 1,
+		"DEFAULT_BG_CYCLE": 0.5,
+		"APPS":
+			[
+				{"NAME": "facebook", "PATH": "new_part/trace-mmap/facebook", 
+				"PS_NAME": "com.facebook.katana", "LOADING_FILE":8,
+				"LOADING_CYCLE":1,
+				"CACHE":
+					[
+						{"PATH":"/data/com.facebook.katana/files/graph_cursor/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.566038, "ONETIMES": 0.733333, "ZIPF_S": 0.900407,  "MAX_REF": 23},
+						{"PATH":"/data/com.facebook.katana/files/NewsFeed/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.555556, "ONETIMES": 0.6, "ZIPF_S": 1,  "MAX_REF": 2},
+						{"PATH":"/data/com.facebook.katana/cache/compactdisk/", "MAX_CACHE": 24, "EVICT_RATIO": 0, "UNIQUE": 0.847619, "ONETIMES": 0.876404, "ZIPF_S": 0.492543,  "MAX_REF": 3},
+						{"PATH":"/data/com.facebook.katana/cache/ExoPlayerCacheDir/", "MAX_CACHE": 40, "EVICT_RATIO": 0, "UNIQUE": 0.0350714, "ONETIMES": 0.388258, "ZIPF_S": 1.08941,  "MAX_REF": 161},
+						{"PATH":"/data/com.facebook.katana/cache/overtheair/", "MAX_CACHE": 0.3, "EVICT_RATIO": 0, "UNIQUE": 0.674157, "ONETIMES": 0.566667, "ZIPF_S": 0.158743,  "MAX_REF": 2}
+					]
+				},
+				{"NAME": "twitter", "PATH": "new_part/trace-mmap/twitter", 
+				"PS_NAME": "com.twitter.android", "LOADING_FILE":8,
+				"LOADING_CYCLE":1,
+				"CACHE":
+					[
+						{"PATH":"/data/com.twitter.android/cache/videos/", "MAX_CACHE": 40, "EVICT_RATIO": 0, "UNIQUE": 0.543689, "ONETIMES": 0.732143, "ZIPF_S": 0.715329,  "MAX_REF": 6},
+						{"PATH":"/data/com.twitter.android/cache/image_cache/", "MAX_CACHE": 40, "EVICT_RATIO": 0, "UNIQUE": 0.912155, "ONETIMES": 0.93505, "ZIPF_S": 0.395625,  "MAX_REF": 3},
+						{"PATH":"/data/com.twitter.android/cache/precache/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.828571, "ONETIMES": 0.965517, "ZIPF_S": 1,  "MAX_REF": 2}
+					]
+				},
+				{"NAME": "webview", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.webview", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				}
+			]
+	},
+	"NORMAL_APP":
+	{
+		"APP_INSTALL_CYCLE": 0.1,
+		"APP_UNINSTALL_CYCLE": 1000,
+		"DEFAULT_UPDATE_CYCLE": 7,
+		"DEFAULT_LOADING_CYCLE": 1,
+		"DEFAULT_BG_CYCLE": 0.5,
+		"APPS":
+			[
+		]
+	},
+	"PROCESS":
+	{
+		"INSTALL":
+		["android.process.acore", 
+		 "android.process.media",
+		 "com.android.vending",
+		 "com.google.android.googlequicksearchbox:interactor",
+		 "com.google.android.inputmethod.korean",
+		 "com.google.android.videos",
+		 "com.google.process.gapps",
+		 "system"
+		],
+		"UPDATE":
+		[
+			"android.process.acore",
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"google.android.instantapps.supervisor",
+			"com.android.defcontainer",
+			"com.google.android.videos",
+			"system"
+		],
+		"LOADING":
+		[
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"system"
+		],
+		"UNINSTALL":
+		[
+			"android.process.acore",
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"system"
+		]
+	},
+	"FULLDISK":
+	{
+		"LIMIT": 98.0,
+		"UNINSTALL_APP": 1,
+		"CAMERA_DELETE": 40,
+		"MUL_DELETE": [
+			{"NAME":"movie", "DELETE":1},
+			{"NAME":"music", "DELETE":10}
+		]
+	}
+}

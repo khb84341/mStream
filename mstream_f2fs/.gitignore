@@ -1,0 +1,5 @@
+*.o
+*.ko
+*.swp
+f2fs.mod.c
+.f2fs.mod.c

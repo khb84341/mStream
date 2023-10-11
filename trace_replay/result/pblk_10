@@ -1,0 +1,25 @@
+STREAM	8	5	37	129	99	524	0	0	0	0	0	0	0	221	
+MAP	221	0	802	0	
+LOG	24576
+
+[WAF] req sub gc erase gcskip preinvalid
+0	242863	242848	4718	55	0	0
+1	133987	133976	6553	25	0	0
+2	2060313	2060304	84404	487	0	0
+3	8747172	8747160	57647	2092	0	0
+4	5287041	5287032	73263	1250	0	0
+5	14208242	14528712	93894	3316	0	0
+
+
+
+
+
+[MAP] define BMT SMT PMT plog blog
+802	0	802	0	0	0
+
+[MAP] mapwrite mapread
+56146	60986
+
+[ETC] if_writes if_reads nrflush paddedwrite paddedwb sync_write recov_write recov_gc_reads cache_reads sync_reads
+
+65	0	0	0	2415	31000032	0	320479	224	348319

@@ -1,0 +1,64 @@
+
+=====[ partition info(temp_tg). #0, RW]=====
+[SB: 1] [CP: 2] [SIT: 2] [NAT: 30] [SSA: 14] [MAIN: 6352(OverProv:354 Resv:32)]
+
+Utilization: 34% (1056287 valid blocks)
+  - Node: 23452 (Inode: 22640, Other: 812)
+  - Data: 1032835
+  - Inline_xattr Inode: 22639
+  - Inline_data Inode: 0
+  - Inline_dentry Inode: 1276
+  - Orphan/Append/Update Inode: 2, 0, 0
+
+Main area: 6352 segs, 794 secs 794 zones
+  - COLD  data: 5708, 713, 713
+  - WARM  data: 5665, 708, 708
+  - HOT   data: 5713, 714, 714
+  - Dir   dnode: 1979, 247, 247
+  - File   dnode: 5721, 715, 715
+  - Indir nodes: 9, 1, 1
+
+  - Valid: 1713
+  - Dirty: 812
+  - Prefree: 0
+  - Free: 3827 (424)
+
+CP calls: 1116 (BG: 192)
+GC calls: 174 (BG: 174)
+  - data segments : 525 (525)
+  - node segments : 50 (50)
+Try to move 44783 blocks (BG: 44783)
+  - data blocks : 41602 (41602)
+  - node blocks : 3181 (3181)
+
+Extent Cache:
+  - Hit Count: L1-1:121375 L1-2:83460 L2:1879
+  - Hit Ratio: 9% (206714 / 2178567)
+  - Inner Struct Count: tree: 21223(0), node: 15271
+
+Balancing F2FS Async:
+  - IO (CP:    0, Data:    0, Flush: (   0 189675), Discard: (   0    0)) cmd:    0 undiscard:   0
+  - inmem:    0, atomic IO:    0 (Max.    0), volatile IO:    0 (Max.    0)
+  - nodes:    0 in 23452
+  - dents:    0 in dirs:   0 (   0)
+  - datas:  352 in files:   0
+  - meta:    0 in 6782
+  - imeta:    0
+  - NATs:         0/    43550
+  - SITs:         0/     6352
+  - free_nids:     20098/  3470945
+  - alloc_nids:         0
+
+Distribution of User Blocks: [ valid | invalid | free ]
+  [-----------------|-----|----------------------------]
+
+IPU: 0 blocks
+SSR: 0 blocks in 0 segments
+LFS: 17046472 blocks in 33291 segments
+
+BDF: 88, avg. vblocks: 1764
+
+Memory: 127156 KB
+  - static: 1933 KB
+  - cached: 4286 KB
+  - paged : 120936 KB

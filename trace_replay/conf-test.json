@@ -1,0 +1,247 @@
+{
+	"MOUNT_DIR": "data",
+	"INIT_FILEMAP": "init-file/180820_init",
+	"MULTIMEDIA":
+	{
+		"CAMERA":
+		{
+			"NAME": "camera",
+			"MULTIMEDIA_PATH": "data/media/0/DCIM/Camera",
+			"TAKE_COUNT":15, "DELETE_COUNT":1, "SIZE_UNIT(B)":1048576, "MIN_SIZE":0.5, "MAX_SIZE":4, "INIT_COUNT": 0
+		},
+		"OTHERS":
+		[
+			{
+				"NAME": "movie", "MULTIMEDIA_PATH": "data/media/0/movie/",
+				"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":2048, "MAX_SIZE":2048, "INIT_COUNT": 0
+			},
+			{
+				"NAME": "music", "MULTIMEDIA_PATH": "data/media/0/music/",
+				"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":4, "MAX_SIZE":12, "INIT_COUNT": 0
+			}
+		]
+	},
+	"BASIC_APP":
+	{
+		"DEFAULT_UPDATE_CYCLE": 14,
+		"DEFAULT_LOADING_CYCLE": 1,
+		"DEFAULT_BG_CYCLE": 100,
+		"APPS":
+			[
+				{"NAME": "chrome", "PATH": "new_part/trace-mmap/chrome", 
+				"PS_NAME": "com.android.chrome", "LOADING_FILE":7,
+				"LOADING_CYCLE":1.2,
+				"CACHE":
+					[
+						{"PATH": "/data/com.android.chrome/cache/Cache/", "MAX_CACHE": 120, "EVICT_RATIO": 0, "UNIQUE": 0.178302, "ONETIMES": 0.234568, "ZIPF_S": 1.06309,  "MAX_REF": 112}
+					]
+				},
+				{"NAME": "facebook", "PATH": "new_part/trace-mmap/facebook", 
+				"PS_NAME": "com.facebook.katana", "LOADING_FILE":8,
+				"LOADING_CYCLE":1.8,
+				"CACHE":
+					[
+						{"PATH": "/data/com.facebook.katana/cache/compactdisk/", "MAX_CACHE": 2, "EVICT_RATIO": 0, "UNIQUE": 0.857143, "ONETIMES": 0.877778, "ZIPF_S": 0.492543,  "MAX_REF": 3},
+						{"PATH": "/data/com.facebook.katana/cache/ExoPlayerCacheDir/", "MAX_CACHE": 60, "EVICT_RATIO": 0, "UNIQUE": 0.0351378, "ONETIMES": 0.389414, "ZIPF_S": 1.08941,  "MAX_REF": 161},
+						{"PATH": "/data/com.facebook.katana/files/NewsFeed/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.555556, "ONETIMES": 0.4, "ZIPF_S": 0.670672,  "MAX_REF": 2},
+						{"PATH": "/data/com.facebook.katana/files/graph_cursor/", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH":"/data/com.facebook.katana/cache/overtheair/", "MAX_CACHE": 0.3, "EVICT_RATIO": 0, "UNIQUE": 0.674157, "ONETIMES": 0.566667, "ZIPF_S": 0.158743,  "MAX_REF": 2}
+					]
+				},
+				{"name": "instagram", "path": "new_part/trace-mmap/instagram", 
+				"ps_name": "com.instagram.android", "LOADING_FILE":8,
+				"LOADING_CYCLE":2.35,
+				"cache":
+					[
+						{"PATH": "/media/0/Android/data/com.instagram.android/cache/ExoPlayerCacheDir/", "MAX_CACHE": 70, "EVICT_RATIO": 0, "UNIQUE": 0.2, "ONETIMES": 0.782609, "ZIPF_S": 1.42461,  "MAX_REF": 97},
+						{"PATH": "/data/com.instagram.android/cache/http_responses/", "MAX_CACHE": 0.003, "EVICT_RATIO": 0, "UNIQUE": 0.810127, "ONETIMES": 0.828125, "ZIPF_S": 0.414001,  "MAX_REF": 3},
+						{"PATH": "/data/com.instagram.android/cache/images/", "MAX_CACHE": 25, "EVICT_RATIO": 0, "UNIQUE": 0.644912, "ONETIMES": 0.915952, "ZIPF_S": 1.23119,  "MAX_REF": 90},
+						{"PATH":"/data/com.instagram.android/files/analytics", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.674157, "ONETIMES": 0.566667, "ZIPF_S": 0.158743,  "MAX_REF": 2}
+					]
+				},
+				{"NAME": "twitter", "PATH": "new_part/trace-mmap/twitter", 
+				"PS_NAME": "com.twitter.android", "LOADING_FILE":8,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/image_cache/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.913177, "ONETIMES": 0.935123, "ZIPF_S": 0.395625,  "MAX_REF": 3},
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/videos/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 0.543689, "ONETIMES": 0.714286, "ZIPF_S": 0.74187,  "MAX_REF": 6},
+						{"PATH": "/data/com.twitter.android/cache/precache/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/image_cache/", "MAX_CACHE": 9, "EVICT_RATIO": 0, "UNIQUE": 0.913177, "ONETIMES": 0.935123, "ZIPF_S": 0.395625,  "MAX_REF": 3},
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/photos/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.666667, "ONETIMES": 0.666667, "ZIPF_S": 1,  "MAX_REF": 2}						
+					]
+				},
+				{"NAME": "youtube", "PATH": "new_part/trace-mmap/youtube", 
+				"PS_NAME": "com.google.android.youtube", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.72,
+				"CACHE":
+					[
+						{"PATH": "/media/0/Android/data/com.google.android.youtube/cache/exo/", "MAX_CACHE": 140, "EVICT_RATIO": 0, "UNIQUE": 0.442563, "ONETIMES": 0.674317, "ZIPF_S": 0.61408,  "MAX_REF": 14},
+						{"PATH": "/data/com.google.android.youtube/cache/zeroprefix.cache/", "MAX_CACHE": 0.09, "EVICT_RATIO": 0, "UNIQUE": 0.823308, "ONETIMES": 0.899543, "ZIPF_S": 0.676967,  "MAX_REF": 6}
+					]
+				},
+				{"NAME": "googlemap", "PATH": "new_part/trace-mmap/googlemap", 
+				"PS_NAME": "com.google.android.apps.maps", "LOADING_FILE":7,
+				"LOADING_CYCLE":5,
+				"CACHE":
+					[
+						{"PATH": "/data/com.google.android.apps.maps/cache/image_manager_disk_cache/", "MAX_CACHE": 0, "EVICT_RATIO": 0, "UNIQUE": 0.994062, "ONETIMES": 0.994026, "ZIPF_S": 0,  "MAX_REF": 1}
+					]
+				},
+				{"NAME": "calc", "PATH": "new_part/trace-mmap/calc", 
+				"PS_NAME": "com.google.android.calculator", "LOADING_FILE":7,
+				"LOADING_CYCLE":6.67,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "calendar", "PATH": "new_part/trace-mmap/calendar",
+				"PS_NAME": "com.google.android.calendar", "LOADING_FILE":7,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "keep", "PATH": "new_part/trace-mmap/keep",
+				"PS_NAME": "com.google.android.keep", "LOADING_FILE":7,
+				"LOADING_CYCLE":4,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gmail", "PATH": "new_part/trace-mmap/gmail",
+				"PS_NAME": "com.google.android.gm", "LOADING_FILE":8,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gdocs", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.docs", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gfitness", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.fitness", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "googleplus", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.plus", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gplay", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.android.vending", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gppt", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.docs.editors.slides", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gsheet", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.docs.editors.sheets", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gphoto", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.photos", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "webview", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.webview", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				}
+			]
+	},
+	"NORMAL_APP":
+	{
+		"APP_INSTALL_CYCLE": 0.1,
+		"APP_UNINSTALL_CYCLE": 1000,
+		"DEFAULT_UPDATE_CYCLE": 14,
+		"DEFAULT_LOADING_CYCLE": 1,
+		"DEFAULT_BG_CYCLE": 100,
+		"APPS":
+			[
+				{"NAME": "clash", "PATH": "new_part/trace-mmap/clash", 
+				"PS_NAME": "com.supercell.clashroyale", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.49,
+				"CACHE":
+					[
+						{"PATH": "cache/org.chromium.android_webview/", "MAX_CACHE": 1, "EVICT_RATIO": 0, "UNIQUE": 0.0966981, "ONETIMES": 0.0487805, "ZIPF_S": 0.445474,  "MAX_REF": 25},
+						{"PATH": "/data/com.supercell.clashroyale/cache/swfcache/", "MAX_CACHE": 250, "EVICT_RATIO": 0, "UNIQUE": 0.77095, "ONETIMES": 0.702899, "ZIPF_S": 0,  "MAX_REF": 1},
+						{"PATH": "/data/com.supercell.clashroyale/cache/download/", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0}
+					]
+				}
+		]
+	},
+	"PROCESS":
+	{
+		"INSTALL":
+		["android.process.acore", 
+		 "android.process.media",
+		 "com.android.vending",
+		 "com.google.android.googlequicksearchbox:interactor",
+		 "com.google.android.inputmethod.korean",
+		 "com.google.android.videos",
+		 "com.google.process.gapps",
+		 "system"
+		],
+		"UPDATE":
+		[
+			"android.process.acore",
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"google.android.instantapps.supervisor",
+			"com.android.defcontainer",
+			"com.google.android.videos",
+			"system"
+		],
+		"LOADING":
+		[
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"system"
+		],
+		"UNINSTALL":
+		[
+			"android.process.acore",
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"system"
+		]
+	},
+	"FULLDISK":
+	{
+		"LIMIT": 98.0,
+		"UNINSTALL_APP": 1,
+		"CAMERA_DELETE": 40,
+		"MUL_DELETE": [
+			{"NAME":"movie", "DELETE":1},
+			{"NAME":"music", "DELETE":10}
+		]
+	}
+}

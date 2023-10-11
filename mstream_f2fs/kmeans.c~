@@ -1,0 +1,1111 @@
+#include <linux/kthread.h>
+#include <linux/freezer.h>
+#include "f2fs.h"
+
+#ifdef F2FS_FGROUP
+
+#define sqr(x) ((x)*(x))
+#define MAX_ITERATIONS	10
+
+static void calc_all_distances(int n, int k, unsigned long long *data, 
+					unsigned long long *centroid, unsigned long long **dist)
+{
+	int ii, jj;
+	unsigned long long result1;
+	for (ii = 0; ii < n; ii++) {
+		for (jj = 0; jj < k; jj++) {
+			if (centroid[jj] > data[ii])
+				result1 = centroid[jj] - data[ii];
+			else 
+				result1 = data[ii] - centroid[jj];
+			if (ii*k + jj >= n * k)
+				printk("ii*k + jj: %d, n*k: %d\n", ii*k+jj, n*k);
+			if (dist[ii] == NULL)
+				BUG_ON(1);
+			dist[ii][jj] = result1;
+
+			if (dist[ii][jj] > 4294967295) {
+				printk("DIST>4294967295: centroid[%d]:%llu data[%d]:%llu dist[%d][%d]=%llu\n", jj, centroid[jj], ii, data[ii], ii, jj, dist[ii][jj]);
+			}			
+		}
+	}
+}
+
+static unsigned long long calc_total_distance_org(int n, int k, unsigned long long *data,
+				unsigned long long *centroid, int *index)
+{
+	unsigned long long tot_D = 0;
+	int ii;
+
+	for (ii = 0; ii < n; ii++) {
+		int active_cluster = index[ii];
+		if (active_cluster != -1) {
+			tot_D += (sqr(centroid[active_cluster] - data[ii]));
+		}
+	}
+
+	return tot_D;
+}
+
+
+static unsigned long long calc_total_distance(int n, int k, unsigned long long *data,
+				unsigned long long *centroid, int *index, int *weight)
+{
+	unsigned long long tot_D = 0;
+	int ii;
+
+	for (ii = 0; ii < n; ii++) {
+		int active_cluster = index[ii];
+		if (active_cluster != -1) {
+			if (centroid[active_cluster] > data[ii])
+				tot_D += (sqr(centroid[active_cluster] - data[ii]) * (unsigned long long)weight[ii]);
+			else
+				tot_D += (sqr(data[ii] - centroid[active_cluster]) * (unsigned long long)weight[ii]);
+		}
+	}
+
+	return tot_D;
+}
+
+static void choose_all_clusters_from_distances(int n, int k, unsigned long long **dist, int *index)
+{
+	int ii, jj;
+	for (ii = 0; ii < n; ii++) {
+		int best_index = -1;
+		unsigned long long closest_dist = 4294967295;
+
+		for (jj = 0; jj < k; jj++) {
+			unsigned long long cur_dist = dist[ii][jj];
+			if (cur_dist < closest_dist) {
+				best_index = jj;
+				closest_dist = cur_dist;
+			}
+		}
+		if (best_index == -1) {
+			printk("best_index=-1, closest dist: %llu\n", closest_dist);
+			for (jj = 0; jj < k; jj++) {
+				unsigned long long cur_dist = dist[ii][jj];
+				printk("cur_dist[%d][%d] = %llu\n", ii, jj, cur_dist);
+			}
+		}
+		index[ii] = best_index;
+	}
+}
+
+static void calc_cluster_centroids_org(int n, int k, unsigned long long *data, int *index, 
+		unsigned long long *new_centroid)
+{
+	int cluster_member_count[16];
+	int ii;
+
+	for (ii = 0; ii < k; ii++) {
+		cluster_member_count[ii] = 0;
+		new_centroid[ii] = 0;
+	}
+
+	for (ii = 0; ii < n; ii++) {
+		int active_cluster = index[ii];
+		if (active_cluster < 0 || active_cluster >= k) {
+			printk("active_cluster:%d\n", active_cluster);
+			active_cluster = k - 1;
+		}
+		cluster_member_count[active_cluster]++;
+		new_centroid[active_cluster] += data[ii];
+	}
+	
+	for (ii = 0; ii < k; ii++) {
+		if (cluster_member_count[ii] == 0) {
+			printk("Empty cluster %d\n", ii);
+		}
+		else {
+			new_centroid[ii] = new_centroid[ii] / (unsigned long long)cluster_member_count[ii];
+		}
+	}	
+}
+
+static void calc_cluster_centroids(int n, int k, unsigned long long *data, int *index, 
+		unsigned long long *new_centroid, int *weight)
+{
+	int cluster_member_count[16];
+	int ii;
+
+	for (ii = 0; ii < k; ii++) {
+		cluster_member_count[ii] = 0;
+		new_centroid[ii] = 0;
+	}
+
+	for (ii = 0; ii < n; ii++) {
+		int active_cluster = index[ii];
+		if (active_cluster < 0 || active_cluster >= k) {
+			printk("active_cluster:%d\n", active_cluster);
+			active_cluster = k - 1;
+		}
+		cluster_member_count[active_cluster] += weight[ii];
+		new_centroid[active_cluster] += (data[ii] * (unsigned long long)weight[ii]);
+	}
+	
+	for (ii = 0; ii < k; ii++) {
+		if (cluster_member_count[ii] == 0) {
+			printk("Empty cluster %d\n", ii);
+		}
+		else {
+			new_centroid[ii] = new_centroid[ii] / (unsigned long long)cluster_member_count[ii];
+		}
+	}	
+}
+
+static void copy_assignment_array(int n, int *src, int *tgt)
+{
+	int ii; 
+	for (ii = 0; ii < n; ii++)
+		tgt[ii] = src[ii];
+}
+
+static int assignment_change_count(int n, int *a, int *b)
+{
+	int change_count = 0;
+	int ii;
+	for (ii = 0; ii < n; ii++)
+	{
+		if (a[ii] != b[ii])
+			change_count++;
+	}
+	return change_count;
+}
+
+static int kmeans_org(int n, int k, unsigned long long *data, unsigned long long *center, int *index_cur)
+{
+	unsigned long long **dist;
+	int *index_prev;
+	int batch_iteration = 0;
+	unsigned long long prev_totD = 4294967295;
+	int i = 0;
+
+	printk("n:%d k:%d\n", n, k);
+
+	dist = (unsigned long long**) vmalloc(sizeof (unsigned long long*) * n);
+	if (dist == NULL) {
+		printk("dist memory failed\n");
+		return 0;
+	}
+	for (i = 0; i < n; i ++) {
+		dist[i] = (unsigned long long*)vmalloc(sizeof(unsigned long long) * k);
+		if (dist[i] == NULL) {
+			BUG_ON(1);
+		}
+	} 
+	index_prev = (int*)vmalloc(sizeof(int) * n);
+	if (index_prev == NULL) {
+		for (i = 0; i < n; i ++) {
+			vfree(dist[i]);
+		}
+		vfree(dist);
+		printk("index_prev memory failed\n");
+		return 0;
+	}
+	
+	calc_all_distances(n, k, data, center, dist);
+	choose_all_clusters_from_distances(n, k, dist, index_cur);
+	copy_assignment_array(n, index_cur, index_prev);
+	
+	while (batch_iteration < MAX_ITERATIONS)
+	{
+		unsigned long long totD;
+		int change_count;
+		calc_cluster_centroids_org(n, k, data, index_cur, center);
+			
+		totD = calc_total_distance_org(n, k, data, center, index_cur);
+		if (totD > prev_totD) {
+			copy_assignment_array(n, index_prev, index_cur);
+			calc_cluster_centroids_org(n, k, data, index_cur, center);
+			break;	
+		}
+		copy_assignment_array(n, index_cur, index_prev);
+		calc_all_distances(n, k, data, center, dist);
+		choose_all_clusters_from_distances(n, k, dist, index_cur);
+		change_count = assignment_change_count(n, index_cur, index_prev);
+		if (change_count == 0) {
+			break;
+		}
+		prev_totD = totD;
+		batch_iteration++;
+	}
+
+	for (i = 0; i < n; i ++) {
+		vfree(dist[i]);
+	}
+	vfree(dist);
+	vfree(index_prev);
+
+	return 0;
+}
+
+static int kmeans(int n, int k, unsigned long long *data, unsigned long long *center, int *index_cur, int *weight)
+{
+	unsigned long long **dist;
+	int *index_prev;
+	int batch_iteration = 0;
+	unsigned long long prev_totD = 4294967295;
+	int i = 0;
+
+	printk("n:%d k:%d\n", n, k);
+
+	dist = (unsigned long long**) vmalloc(sizeof (unsigned long long*) * n);
+	if (dist == NULL) {
+		printk("dist memory failed\n");
+		return 0;
+	}
+	for (i = 0; i < n; i ++) {
+		dist[i] = (unsigned long long*)vmalloc(sizeof(unsigned long long) * k);
+		if (dist[i] == NULL) {
+			BUG_ON(1);
+		}
+	} 
+	index_prev = (int*)vmalloc(sizeof(int) * n);
+	if (index_prev == NULL) {
+		for (i = 0; i < n; i ++) {
+			vfree(dist[i]);
+		}
+		vfree(dist);
+		printk("index_prev memory failed\n");
+		return 0;
+	}
+	
+	calc_all_distances(n, k, data, center, dist);
+	choose_all_clusters_from_distances(n, k, dist, index_cur);
+	copy_assignment_array(n, index_cur, index_prev);
+	
+	while (batch_iteration < MAX_ITERATIONS)
+	{
+		unsigned long long totD;
+		int change_count;
+		calc_cluster_centroids(n, k, data, index_cur, center, weight);
+			
+		totD = calc_total_distance(n, k, data, center, index_cur, weight);
+		if (totD > prev_totD) {
+			copy_assignment_array(n, index_prev, index_cur);
+			calc_cluster_centroids(n, k, data, index_cur, center, weight);
+			break;	
+		}
+		copy_assignment_array(n, index_cur, index_prev);
+		calc_all_distances(n, k, data, center, dist);
+		choose_all_clusters_from_distances(n, k, dist, index_cur);
+		change_count = assignment_change_count(n, index_cur, index_prev);
+		if (change_count == 0) {
+			break;
+		}
+		prev_totD = totD;
+		batch_iteration++;
+	}
+
+	for (i = 0; i < n; i ++) {
+		vfree(dist[i]);
+	}
+	vfree(dist);
+	vfree(index_prev);
+
+	return 0;
+}
+
+static int convert_data(int n, int k, unsigned long long *data, unsigned long long *center, int *weight)
+{
+	int weight_sum, min_pointer;
+	char *visit_bitmap;
+	int *sort_index;
+	int i, j;
+	unsigned long long interval;
+	unsigned long long median, maximum, num;
+
+	weight_sum = 0;
+
+	visit_bitmap = (char*) vmalloc(sizeof(char) * n);
+	sort_index = (int*) vmalloc(sizeof(int) * n);
+	for (j = 0; j < n; j++) {
+		visit_bitmap[j] = 0;
+		weight_sum += weight[j];
+		sort_index[j] = -1;
+	}
+
+	min_pointer = 0;
+	for (i = 0; i < n; i++) {
+		int min_index = -1;
+		unsigned long long min_data = 4294967295;
+		min_index = -1;
+
+		for (j = 0; j < n; j++) {
+			if (visit_bitmap[j] == 1)
+				continue; 
+			if (min_data > data[j]) {
+				min_data = data[j];
+				min_index = j;
+			}
+		}
+		if (min_index == -1) {
+			break;
+		}
+		sort_index[min_pointer] = min_index;
+		visit_bitmap[min_index] = 1;
+		min_pointer++;
+	}
+
+	median = data[sort_index[n/2]] + 1;
+	maximum = data[sort_index[n-1]];
+	num = maximum * median;
+
+	for (i = 0; i < n; i++) {
+		int index = sort_index[i]; 
+		unsigned long long div = data[index] + median;
+		unsigned long long new_data = maximum - num / div;
+		data[index] = new_data;
+	}
+
+	interval = weight_sum / (k);
+	if (interval == 0) {
+		interval = 1;
+	}
+
+	j = 0; 
+	for (i = 0; i < (k); i++) {
+		int sum_w = 0, interval_center;
+		interval = weight_sum / (k - i);
+		interval_center = interval / 2;
+		while (1) {
+			int index = sort_index[j]; 
+			if (index == -1)
+				BUG_ON(1);
+			sum_w += weight[index];
+			j++;
+			if (sum_w >= interval_center)
+				center[i] = data[index];
+			if (sum_w >= interval) {
+				break;
+			}
+			if (k - i - 1 == n - j) {
+				break;	
+			}
+		}
+		weight_sum -= sum_w;
+	}
+
+	for (i = 0; i < (k); i++) {
+		printk("INIT-CENTER[%d] = %llu\n", i, center[i]);
+	}
+	vfree(visit_bitmap);
+	vfree(sort_index);
+	return 0;
+}
+
+static int init_center(int n, int k, unsigned long long *data, unsigned long long *center, int *weight)
+{
+    int weight_sum, min_pointer;
+    char *visit_bitmap;
+    int *sort_index;
+    int i, j;
+    unsigned long long interval;
+
+    weight_sum = 0;
+
+    visit_bitmap = (char*) vmalloc(sizeof(char) * n);
+    sort_index = (int*) vmalloc(sizeof(int) * n);
+    for (j = 0; j < n; j++) {
+        visit_bitmap[j] = 0;
+        weight_sum += weight[j];
+        sort_index[j] = -1;
+    }
+
+    min_pointer = 0;
+//  Soring
+    for (i = 0; i < n; i++) {
+        int min_index = -1;
+        unsigned long long min_data = 4294967295;
+        min_index = -1;
+
+        for (j = 0; j < n; j++) {
+            if (visit_bitmap[j] == 1)
+                continue;
+            if (min_data > data[j]) {
+                min_data = data[j];
+                min_index = j;
+            }
+        }
+        if (min_index == -1) {
+            printk("min index = -1: %d\n", n);
+            break;
+        }
+        sort_index[min_pointer] = min_index;
+        visit_bitmap[min_index] = 1;
+        min_pointer++;
+    }
+
+    interval = weight_sum / (k);
+    if (interval == 0) {
+        interval = 1;
+    }
+
+	j = 0;
+    for (i = 0; i < (k); i++) {
+        int sum_w = 0, interval_center;
+        interval = weight_sum / (k - i);
+        interval_center = interval / 2;
+        while (1) {
+            int index = sort_index[j];
+            if (index == -1) {
+                printk("weight_sum:%d, interval:%d interval_center:%d j:%d n:%d, min_pointer: %d\n",
+                    weight_sum, interval, interval_center, j, n, min_pointer);
+                BUG_ON(1);
+            }
+            sum_w += weight[index];
+            j++;
+            if (sum_w >= interval_center)
+                center[i] = data[index];
+            if (sum_w >= interval) {
+                break;
+            }
+            if (k - i - 1 == n - j) {
+                break;
+            }
+        }
+        weight_sum -= sum_w;
+    }
+
+    for (i = 0; i < (k); i++) {
+        printk("INIT-CENTER[%d] = %llu\n", i, center[i]);
+    }
+    vfree(visit_bitmap);
+    vfree(sort_index);
+    return 0;
+}
+
+
+#define KMEANS_BOUND	(90)
+static int kmeans_cluster_minmax(struct f2fs_sb_info* sbi, unsigned long long *data, int *weight, int *cluster, int n)
+{
+	int min_pointer;
+	char *visit_bitmap;
+	int *sort_index;
+	int i, j;
+	unsigned long long interval;
+	int weight_sum[NR_CLUSTER];
+	int weight_minbound[NR_CLUSTER];
+	int weight_maxbound[NR_CLUSTER];
+	int weight_pointer[NR_CLUSTER];
+	int steps[NR_CLUSTER];
+	int kmeans_count = sbi->kmeans_count; 
+	unsigned long long cur_seq = user_data_blocks(sbi) / 512; 
+
+	if (kmeans_count >= MAX_HISTORY)
+		return 0;
+
+	sbi->kmeans_history[kmeans_count].seq = cur_seq;
+
+	visit_bitmap = (char*) vmalloc(sizeof(char) * n);
+	sort_index = (int*) vmalloc(sizeof(int) * n);
+
+	for (i = 0; i < NR_CLUSTER; i++) {
+		weight_sum[i] = 0; 
+	}
+	for (i = 0; i < n; i++) {
+		int cluster_num = cluster[i];
+		visit_bitmap[i] = 0;
+		sort_index[i] = -1;
+		if (cluster_num >= NR_CLUSTER) {
+			cluster_num = NR_CLUSTER - 1;
+		}
+		weight_sum[cluster_num] += weight[i];
+	}
+
+	for (i = 0; i < NR_CLUSTER; i++) {
+		weight_minbound[i] = weight_sum[i] * (50 - (KMEANS_BOUND)/2) / 100; 
+		weight_maxbound[i] = weight_sum[i] - weight_minbound[i];
+		weight_pointer[i] = 0;
+		steps[i] = 0;
+	}
+
+	min_pointer = 0;
+//	Soring 
+	for (i = 0; i < n; i++) {
+		int min_index = -1;
+		unsigned long long min_data = 4294967295;
+		min_index = -1;
+
+		for (j = 0; j < n; j++) {
+			if (visit_bitmap[j] == 1)
+				continue; 
+			if (min_data > data[j]) {
+				min_data = data[j];
+				min_index = j;
+			}
+		}
+		if (min_index == -1) {
+			printk("min index = -1: %d\n", n);
+			break;
+		}
+		sort_index[min_pointer] = min_index;
+		visit_bitmap[min_index] = 1;
+		min_pointer++;
+	}
+
+	for (i = 0; i < n; i++) {
+		int index = sort_index[i]; 
+		int cluster_num, weight_num;
+		if (index == -1) {
+			printk("index = -1\n");
+			BUG_ON(1);
+		}
+		cluster_num = cluster[index]; 
+		weight_num = weight[index];
+
+		weight_pointer[cluster_num] += weight_num;
+
+		if (steps[cluster_num] == 0) {
+			if (weight_pointer[cluster_num] > weight_minbound[cluster_num]) {
+				unsigned long long lifetime = data[index];
+				sbi->kmeans_history[kmeans_count].q1[cluster_num] = lifetime; 
+				steps[cluster_num] = 1;
+			}
+		}
+		if (steps[cluster_num] == 1) {
+			if (weight_pointer[cluster_num] > weight_maxbound[cluster_num]) {
+				unsigned long long lifetime = data[index];
+				sbi->kmeans_history[kmeans_count].q3[cluster_num] = lifetime;
+				steps[cluster_num] = 2;
+			}
+		}
+	}
+
+	sbi->kmeans_history[kmeans_count].q1[0] = 0;
+	sbi->kmeans_history[kmeans_count].q3[0] = sbi->kmeans_max[0]; 
+	steps[0] = 2;
+
+	for (i = 0; i < NR_CLUSTER; i++) {
+		if (steps[i] == 0) {
+			if (i > 0) 
+				sbi->kmeans_history[kmeans_count].q1[i] = sbi->kmeans_max[i-1]; 
+			else
+				sbi->kmeans_history[kmeans_count].q1[i] = 0;
+			steps[i] = 1;
+		}
+		if (steps[i] == 1) {
+			sbi->kmeans_history[kmeans_count].q3[i] = sbi->kmeans_max[i]; 
+		}
+/*
+		if (i > 0 && i < (NR_CLUSTER)) {
+			sbi->kmeans_history[kmeans_count].q1[i] = sbi->kmeans_max[i-1]; 
+		}
+*/
+		sbi->kmeans_history[kmeans_count].q1[i] = (100 - FGROUP_LIFERANGE) * sbi->kmeans_history[kmeans_count].q1[i] / 100;
+		sbi->kmeans_history[kmeans_count].q3[i] = (100 + FGROUP_LIFERANGE) * sbi->kmeans_history[kmeans_count].q3[i] / 100;
+
+		printk("KMEANS\t%d\t%u\t%u\t%u\n", i, sbi->kmeans_history[kmeans_count].seq, sbi->kmeans_history[kmeans_count].q1[i], sbi->kmeans_history[kmeans_count].q3[i]);
+		trace_printk("KMEANS\t%d\t%u\t%u\t%u\n", i, sbi->kmeans_history[kmeans_count].seq, sbi->kmeans_history[kmeans_count].q1[i], sbi->kmeans_history[kmeans_count].q3[i]);
+
+	}
+
+	vfree(visit_bitmap);
+	vfree(sort_index);
+	return 0;
+}
+
+static int uniform(int n, int k, unsigned long long *data, unsigned long long *center, int *index_cur, int *weight)
+{
+	int weight_sum, min_pointer, max_pointer;
+	char *visit_bitmap;
+	unsigned long long min_data = 2147483647;
+	unsigned long long max_data = 0;
+	unsigned long long center_temp[NR_CLUSTER];
+	unsigned long long interval;
+	int *sort_index;
+	int max_data_count = 0;
+
+	int i, j;
+
+	visit_bitmap = (char*) vmalloc(sizeof(char) * n);
+	sort_index = (int*) vmalloc(sizeof(int) * n);
+
+	weight_sum = 0;
+	max_pointer = -1;
+
+	for (j = 0; j < n; j++) {
+//		if (data[j] == max_value) {
+//			visit_bitmap[j] = 1;
+//			index_cur[j] = CLUSTER_NUM - 1;
+//			max_data_count++;
+//		} else {
+			visit_bitmap[j] = 0;
+			weight_sum += weight[j];
+			max_pointer++; 
+			index_cur[j] = -1;
+//		}
+		sort_index[j] = -1;
+	}
+	min_pointer = 0;
+
+//	Soring 
+	for (i = 0; i < n; i++) {
+		int max_index, min_index;
+		max_data = 0;
+		max_index = -1;
+		min_data = 4294967295;
+		min_index = -1;
+
+		for (j = 0; j < n; j++) {
+			if (visit_bitmap[j] == 1)
+				continue; 
+			if (max_data <= data[j]) {
+				max_data = data[j];
+				max_index = j;
+			}
+			if (min_data > data[j]) {
+				min_data = data[j];
+				min_index = j;
+			}
+		}
+		if (min_index == -1) {
+			printk("sort break: i:%d min_pointer:%d, max_pointer:%d\n", 
+											i, min_pointer, max_pointer);
+			break;
+		}
+		if (max_index == -1) {
+			break;
+		}
+
+		if (max_index == min_index) {
+			sort_index[min_pointer] = min_index;
+			visit_bitmap[min_index] = 1;
+			min_pointer++;			
+		} else {
+			sort_index[min_pointer] = min_index;
+			sort_index[max_pointer] = max_index;
+			visit_bitmap[min_index] = 1;
+			visit_bitmap[max_index] = 1;
+			min_pointer++;			
+			max_pointer--;
+		}
+		if (min_pointer > max_pointer)
+			break;
+	}
+
+	interval = weight_sum / (NR_CLUSTER);
+	if (interval == 0) {
+		vfree(visit_bitmap);
+		vfree(sort_index);
+		return 0;
+	}
+	j = 0; 
+
+	for (i = 0; i < (NR_CLUSTER); i++) {
+		int sum_w = 0;
+		interval = weight_sum / (NR_CLUSTER - i);
+		while (1) {
+			int index = sort_index[j]; 
+			if (index == -1)
+				BUG_ON(1);
+			sum_w += weight[index];
+			index_cur[index] = i;
+			printk("C-TEST\t%d\t%d\t%d\t%llu\t%d\t\n", j, i, index, data[index], weight[index]);
+			j++;
+			if (sum_w >= interval) {
+				break;
+			}
+			if (NR_CLUSTER - i - 1 == n - j) {
+				break;	
+			}
+		}
+		weight_sum -= sum_w;
+		center_temp[i] = data[sort_index[j-1]];
+	}
+//	center_temp[i] = max_value;
+
+	while (j < n - max_data_count) {
+		int index = sort_index[j]; 
+		if (index == -1)
+			BUG_ON(1);
+		index_cur[index] = NR_CLUSTER - 1;
+		j++;
+	}
+
+	center[0] = (data[sort_index[0]] + center_temp[0]) / 2;
+	for (i = 1; i < (NR_CLUSTER); i++) {
+		center[i] = (center_temp[i-1] + center_temp[i]) / 2; 
+	}
+//	center[i] = center_temp[i];
+
+	printk("group_min:%llu\n", data[sort_index[0]]);
+	for (i = 0; i < (NR_CLUSTER); i++) {
+		printk("group_max[%d]:%llu\n", i, center_temp[i]);
+	}
+
+	for (j = 0; j < n; j++) {
+		if (index_cur[j] == -1) {
+			BUG_ON(1);
+		}
+	}
+
+	vfree(visit_bitmap);
+	vfree(sort_index);
+	return 0;
+}
+
+static int fixed_center(int n, int k, unsigned long long *data, unsigned long long *center, int *index_cur)
+{
+	unsigned long long **dist;
+	int *index_prev;
+	int batch_iteration = 0;
+	unsigned long long prev_totD = 4294967295;
+	int i = 0;
+
+	printk("n:%d k:%d\n", n, k);
+
+	dist = (unsigned long long**) vmalloc(sizeof (unsigned long long*) * n);
+	if (dist == NULL) {
+		printk("dist memory failed\n");
+		return 0;
+	}
+	for (i = 0; i < n; i ++) {
+		dist[i] = (unsigned long long*)vmalloc(sizeof(unsigned long long) * k);
+		if (dist[i] == NULL) {
+			BUG_ON(1);
+		}
+	} 
+	index_prev = (int*)vmalloc(sizeof(int) * n);
+	if (index_prev == NULL) {
+		for (i = 0; i < n; i ++) {
+			vfree(dist[i]);
+		}
+		vfree(dist);
+		printk("index_prev memory failed\n");
+		return 0;
+	}
+	
+	calc_all_distances(n, k, data, center, dist);
+	choose_all_clusters_from_distances(n, k, dist, index_cur);
+	copy_assignment_array(n, index_cur, index_prev);
+	
+	for (i = 0; i < n; i ++) {
+		vfree(dist[i]);
+	}
+	vfree(dist);
+	vfree(index_prev);
+
+	return 0;
+}
+
+
+#define KMEANS_ENABLE
+//#define FIX_HOT
+
+static int f2fs_update_cluster(struct f2fs_sb_info *sbi)
+{
+	unsigned long long *data;
+	int *result, *weight, *cluster_arr;
+	char *visit_bitmap;
+	unsigned long long *fgroup;
+	int order_result[NR_CLUSTER];
+	unsigned long long *center;
+	int i, j;
+	unsigned long long min_data = 2147483647;
+	unsigned long long max_data = 0;
+	int dynamic_vstream = 0;
+	struct rb_node *n;
+	unsigned long long max_value = 2147483647;
+	unsigned long long cur_seq = user_data_blocks(sbi);
+	int nr_cluster = NR_CLUSTER; 
+	int max_lifetime = 1;
+	int hot_count = 0;
+	unsigned long long max_cluster[NR_CLUSTER];
+#ifdef FIX_HOT
+	nr_cluster = NR_CLUSTER -1;
+#endif
+
+	if (sbi->last_cluster > cur_seq)
+		return 0;
+
+	spin_lock(&sbi->ftree_lock);
+	n = rb_first(&sbi->fgroup_tree);
+	while (n) {
+		dynamic_vstream++;
+		n = rb_next(n);
+	}
+	printk("VSTREAM NUM: %d\n", dynamic_vstream);
+
+	if (dynamic_vstream <= nr_cluster) {
+		sbi->last_cluster = cur_seq + CLUSTER_T;
+		return 0;
+	}
+
+	fgroup = vmalloc(sizeof(unsigned long long) * dynamic_vstream);
+	data = vmalloc(sizeof(unsigned long long) * dynamic_vstream);
+	weight = (int*) vmalloc(sizeof(int) * dynamic_vstream);
+	visit_bitmap = (char*) vmalloc(sizeof(char) * dynamic_vstream);
+
+#if 0
+	n = rb_first(&sbi->fgroup_tree);
+	while (n) {
+        struct fgroup_entry *entry = rb_entry(n, struct fgroup_entry, rb_node);
+        unsigned int count = entry->count;
+        unsigned long long lifetime;
+
+        if (entry->latest_count > 0) {
+            lifetime = entry->latest_lifetime / entry->latest_count;
+        }
+        else
+            lifetime = 0;
+
+        if (count >= 1) {
+            if (entry->latest_count > 0)
+                lifetime = lifetime * EMA_W_NUM / EMA_W_DIV + entry->ema * (EMA_W_DIV - EMA_W_NUM) / EMA_W_DIV;
+            else
+                lifetime = entry->ema;
+        }
+        lifetime = lifetime / 512;
+        if (count == 0) {
+            n = rb_next(n);
+            continue;
+        }
+
+        if (lifetime > max_lifetime)
+            max_lifetime = lifetime;
+        n = rb_next(n);
+    }
+#endif 
+
+ 	i = 0;
+	n = rb_first(&sbi->fgroup_tree);
+	while (n) {
+		struct fgroup_entry *entry = rb_entry(n, struct fgroup_entry, rb_node);
+		unsigned int count = entry->count;
+		unsigned long long lifetime;
+		int filetype = entry->fgroup & (31); 
+
+		update_new_ema(sbi, entry);
+		if (entry->update_ema == 1) {
+			lifetime = entry->ema;
+		}
+		else if (entry->latest_count > 0) {
+			lifetime = entry->latest_lifetime / entry->latest_count;
+		}
+
+		if (count == 0) {
+			entry->cluster = nr_cluster - 1;
+			dynamic_vstream--;
+			n = rb_next(n);
+			continue;
+		}
+#if (NR_DATABASE == 1)
+		if (filetype == FGROUP_DATABASES) {
+			entry->cluster = f2fs_lifetime_to_cluster(sbi, lifetime);
+			dynamic_vstream--;
+			n = rb_next(n);
+			continue;
+		}
+#else
+#endif
+#ifdef FIX_HOT
+		else if (lifetime < 512 * 8 * 32) {
+			entry->cluster = 0;
+			printk("H%d\t%d\t%llu\t%d\t%u\t%d\t%s\n", hot_count, 0, lifetime/512, count,entry->fgroup, filetype, entry->keyword);
+			dynamic_vstream--;
+			n = rb_next(n);
+			hot_count++;
+			continue;
+		}
+#endif
+		else {
+			lifetime = lifetime / 512;
+
+	        if (lifetime > max_lifetime)
+    	        max_lifetime = lifetime;
+#if 0
+            data[i] = max_lifetime / (lifetime + 1);
+            weight[i] = 1;
+			weight[i] = entry->valid;
+#endif
+			data[i] = lifetime;
+            weight[i] = 1;
+        }
+		fgroup[i] = entry->fgroup;
+
+		if (weight[i] == 0)
+			weight[i] = 1;
+
+		if (data[i] < max_value) {
+			if (max_data < data[i])
+				max_data = data[i];
+			if (min_data > data[i])
+				min_data = data[i];
+		}
+		i++;
+		n = rb_next(n);
+	}
+	spin_unlock(&sbi->ftree_lock);
+
+	printk("HOT count:%d\n", hot_count);
+	if (dynamic_vstream <= nr_cluster)
+		goto out;
+
+	result = (int*) vmalloc(sizeof(int) * dynamic_vstream);
+	center = vmalloc(sizeof(unsigned long long) * nr_cluster);
+
+	if (max_data == 0)
+		max_data = max_value;
+	if (min_data >= max_value)
+		min_data = max_value;
+
+	for (j = 0; j < dynamic_vstream; j++) {
+		result[j] = 0;
+	}
+
+	order_result[0] = -1;
+	for (i = 1; i < nr_cluster; i++) {
+		order_result[i] = -1;
+	}
+
+#ifdef KMEANS_ENABLE
+	printk("CLUSTER: FGROUP: %d\n", dynamic_vstream);
+	init_center(dynamic_vstream, nr_cluster, data, center, weight);
+	//convert_data(dynamic_vstream, nr_cluster, data, center, weight);
+	kmeans_org(dynamic_vstream, nr_cluster, data, center, result);
+#elif (defined FIX_HOT)
+	init_center(dynamic_vstream, nr_cluster, data, center, weight);
+	kmeans_org(dynamic_vstream, nr_cluster, data, center, result);
+
+//	fixed_center(dynamic_vstream, NR_CLUSTER-1, data, center, result);
+#else
+error
+	uniform(dynamic_vstream, NR_CLUSTER, data, center, result, weight);
+#endif
+
+    for (i = 0; i < nr_cluster; i++) {
+        unsigned long long min = 4294967295;
+        int index = -1;
+        for (j = 0; j < nr_cluster; j++) {
+            if (order_result[j] >= 0)
+                continue;
+            if (min > center[j]) {
+                index = j;
+                min = center[j];
+            }
+        }
+        if (index < 0) {
+            printk("index minus %d\n", index);
+            index = 0;
+        }
+        order_result[index] = i;
+    }
+
+	for (i = 0; i < nr_cluster; i++) {
+		max_cluster[i] = 0;
+	}
+
+	cluster_arr = (int*) vmalloc(sizeof(int) * dynamic_vstream);
+    for (j = 0; j < dynamic_vstream; j++) {
+        int cluster;
+        int index = result[j];
+
+        if (index >= 0 && index < nr_cluster)
+            cluster = order_result[index];
+        else
+            cluster = nr_cluster-1;
+
+#ifdef FIX_HOT
+		cluster = cluster + 1;
+#endif
+		update_cluster(sbi, fgroup[j], cluster);
+		cluster_arr[j] = cluster; 
+
+		if (dynamic_vstream > 0) {
+			struct fgroup_entry *fgroup_entry = lookup_fgroup_entry(&sbi->fgroup_tree, fgroup[j]);
+			unsigned long long lifetime;
+
+			if (fgroup_entry == NULL) {
+				printk("%d\t%d\t%llu\t%d\t%d\t%d\t%s\n", j, cluster, data[j], -1, -1, -1, "DELETE");
+				continue;
+			}
+			weight[j] = fgroup_entry->count;
+
+			if (fgroup_entry->update_ema == 1) {
+				lifetime = fgroup_entry->ema;
+			}
+			else if (fgroup_entry->latest_count > 0) {
+				lifetime = fgroup_entry->latest_lifetime / fgroup_entry->latest_count;
+			} else 
+				lifetime = 0;
+
+			if (fgroup_entry != NULL) {
+				int filetype = fgroup_entry->fgroup & (31); 
+				printk("%d\t%d\t%llu\t%d\t%u\t%d\t%s\n", j, cluster, data[j], lifetime, fgroup_entry->fgroup, filetype,  fgroup_entry->keyword);
+			}
+			else
+				printk("%d\t%d\t%llu\t%d\t0\t0\t%s\n", j, cluster, data[j], lifetime, "UNKNOWN");
+
+			if (max_cluster[cluster] < lifetime) {
+				max_cluster[cluster] = lifetime;
+			}
+		}
+    }
+
+#ifdef FIX_HOT
+	max_cluster[0] = 8*8;
+#endif
+	for (i = 0; i < nr_cluster; i++) {
+		sbi->kmeans_max[i] = max_cluster[i]/512;
+		sbi->kmeans_center[i] = center[i];
+		printk("KMENAS: center(%llu) max(%llu)\n", center[i], max_cluster[i]/512);
+		f2fs_issue_expect_lifetime(sbi, i);
+	}
+	kmeans_cluster_minmax(sbi, data, weight, cluster_arr, dynamic_vstream);
+	sbi->kmeans_count++;
+
+	vfree(result);
+	vfree(center);
+	vfree(cluster_arr);
+out:
+	sbi->last_cluster = cur_seq + CLUSTER_T;
+
+	vfree(visit_bitmap);
+	vfree(data);
+	vfree(weight);
+	vfree(fgroup);
+	return 0;
+}
+
+static struct task_struct *f2fs_cluster_task;
+
+static int f2fs_cluster_thread(void *arg)
+{
+	struct f2fs_sb_info *sbi = (struct f2fs_sb_info*)arg;
+
+	while (true)
+	{
+		f2fs_update_cluster(sbi);			
+
+		if (try_to_freeze())
+			continue; 
+		if (kthread_should_stop())
+			break;
+
+		schedule_timeout_interruptible(msecs_to_jiffies(60000));
+	}
+
+	return 0;
+}
+
+int start_cluster_thread(struct f2fs_sb_info *sbi)
+{
+	f2fs_cluster_task = kthread_run(f2fs_cluster_thread, sbi, "cluster");
+	if (IS_ERR(f2fs_cluster_task)) {
+		int err = PTR_ERR(f2fs_cluster_task);
+		f2fs_cluster_task = NULL;
+		return err;
+	}
+	return 0;
+}
+
+void stop_cluster_thread(struct f2fs_sb_info *sbi)
+{
+	if (!f2fs_cluster_task)
+		return;
+
+	kthread_stop(f2fs_cluster_task);
+}
+#endif

@@ -1,0 +1,327 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+App	traceConfig.h	/^struct App$/;"	s
+BasicApp	traceConfig.h	/^struct BasicApp$/;"	s
+CJSON_VERSION_MAJOR	cJSON.h	32;"	d
+CJSON_VERSION_MINOR	cJSON.h	33;"	d
+CJSON_VERSION_PATCH	cJSON.h	34;"	d
+CacheInfo	traceConfig.h	/^struct CacheInfo$/;"	s
+CacheManager	traceReplay.h	/^struct CacheManager$/;"	s
+Config	traceConfig.h	/^struct Config$/;"	s
+DEBUG_REPLAY	simpleReplay.cpp	47;"	d	file:
+DEFAULT_DAY	traceConfig.h	10;"	d
+DELETE_PICTURE	simpleReplay.cpp	43;"	d	file:
+DetachItemFromArray	cJSON.cpp	/^static cJSON *DetachItemFromArray(cJSON *array, size_t which)$/;"	f	file:
+FullDisk	traceConfig.h	/^struct FullDisk$/;"	s
+INITFILE	traceReplay.cpp	19;"	d	file:
+INIT_FILE	simpleReplay.cpp	44;"	d	file:
+INIT_FILEMAP	traceConfig.h	/^	char INIT_FILEMAP[PATH_MAX + 1];$/;"	m	struct:Config
+INTEGER_SIZE	cJSON.cpp	38;"	d	file:
+INTEGER_SIZE	cJSON.cpp	41;"	d	file:
+INTEGER_SIZE	cJSON.cpp	44;"	d	file:
+MAX_NAME	simpleReplay.cpp	17;"	d	file:
+MAX_NAME	traceConfig.h	9;"	d
+MulConf	traceConfig.h	/^struct MulConf$/;"	s
+MulDelete	traceConfig.h	/^struct MulDelete$/;"	s
+Multimedia	traceConfig.h	/^struct Multimedia $/;"	s
+NormalApp	traceConfig.h	/^struct NormalApp$/;"	s
+PREFIX	simpleReplay.cpp	41;"	d	file:
+PREV_OUT	traceReplay.cpp	20;"	d	file:
+PSName	traceConfig.h	/^struct PSName$/;"	s
+REPLAY_BG	traceReplay.h	/^	REPLAY_BG$/;"	e	enum:REPLAY_TYPE
+REPLAY_CAMERA	traceReplay.h	/^	REPLAY_CAMERA,$/;"	e	enum:REPLAY_TYPE
+REPLAY_CAMERA_DELETE	traceReplay.h	/^	REPLAY_CAMERA_DELETE,$/;"	e	enum:REPLAY_TYPE
+REPLAY_INSTALL	traceReplay.h	/^	REPLAY_INSTALL,$/;"	e	enum:REPLAY_TYPE
+REPLAY_LOADING	traceReplay.h	/^	REPLAY_LOADING = 0,$/;"	e	enum:REPLAY_TYPE
+REPLAY_MULTI	traceReplay.h	/^	REPLAY_MULTI,$/;"	e	enum:REPLAY_TYPE
+REPLAY_MULTI_DELETE	traceReplay.h	/^	REPLAY_MULTI_DELETE,$/;"	e	enum:REPLAY_TYPE
+REPLAY_TYPE	traceReplay.h	/^enum REPLAY_TYPE$/;"	g
+REPLAY_UNINSTALL	traceReplay.h	/^	REPLAY_UNINSTALL,$/;"	e	enum:REPLAY_TYPE
+REPLAY_UPDATE	traceReplay.h	/^	REPLAY_UPDATE,$/;"	e	enum:REPLAY_TYPE
+ReplaceItemInArray	cJSON.cpp	/^static void ReplaceItemInArray(cJSON *array, size_t which, cJSON *newitem)$/;"	f	file:
+ReplayFile	traceReplay.h	/^struct ReplayFile$/;"	s
+ReplayJob	traceReplay.h	/^struct ReplayJob$/;"	s
+SPRINTF_INSTALL_PATH	traceReplay.h	12;"	d
+SPRINTF_LOADING_PATH	traceReplay.h	6;"	d
+SPRINTF_LOADING_PATH_NUM	traceReplay.h	8;"	d
+SPRINTF_TRACE_PATH_INPUT	traceConfig.cpp	588;"	d	file:
+SPRINTF_TRACE_PATH_INPUT_NUM	traceConfig.cpp	592;"	d	file:
+SPRINTF_TRACE_PATH_OUTPUT	traceConfig.cpp	590;"	d	file:
+SPRINTF_TRACE_PATH_OUTPUT_NUM	traceConfig.cpp	594;"	d	file:
+SPRINTF_TRACE_PATH_PREFIX	traceConfig.cpp	818;"	d	file:
+SPRINTF_UNINSTALL_PATH	traceReplay.h	14;"	d
+SPRINTF_UPDATE_PATH	traceReplay.h	10;"	d
+TAKE_PICTURE	simpleReplay.cpp	42;"	d	file:
+TRACE_MERGE	traceReplay.cpp	18;"	d	file:
+TYPE_LINK	simpleReplay.cpp	252;"	d	file:
+TYPE_REG	simpleReplay.cpp	251;"	d	file:
+Traceinfo	traceConfig.cpp	/^struct Traceinfo$/;"	s	file:
+VERBOSE	simpleReplay.cpp	45;"	d	file:
+VERBOSE	traceReplay.cpp	21;"	d	file:
+__do_trace_replay	simpleReplay.cpp	/^static double __do_trace_replay(string strMount, char* line, struct ReplayJob *replay, double curTime)$/;"	f	file:
+app_count	traceConfig.h	/^	int app_count;$/;"	m	struct:BasicApp
+app_count	traceConfig.h	/^	int app_count;$/;"	m	struct:NormalApp
+app_install	traceReplay.cpp	/^int app_install(list<struct ReplayJob*> *jobqueue, list<struct App*> *ins_list, list<struct App*> *unins_list, $/;"	f
+apps	traceConfig.h	/^	struct App* apps;$/;"	m	struct:BasicApp	typeref:struct:BasicApp::App
+apps	traceConfig.h	/^	struct App* apps;$/;"	m	struct:NormalApp	typeref:struct:NormalApp::App
+backup_path	traceConfig.h	/^	char backup_path[PATH_MAX + 1];$/;"	m	struct:Config
+basic_app	traceConfig.h	/^	struct BasicApp basic_app;$/;"	m	struct:Config	typeref:struct:Config::BasicApp
+bg_cycle	traceConfig.h	/^	double bg_cycle;$/;"	m	struct:App
+bg_file	traceConfig.h	/^	vector<string> bg_file;$/;"	m	struct:App
+bgjob	traceReplay.h	/^	vector<string> bgjob;$/;"	m	struct:ReplayJob
+buffer	cJSON.cpp	/^    unsigned char *buffer;$/;"	m	struct:__anon1	file:
+cJSON	cJSON.h	/^typedef struct cJSON$/;"	s
+cJSON	cJSON.h	/^} cJSON;$/;"	t	typeref:struct:cJSON
+cJSON_AddBoolToObject	cJSON.h	166;"	d
+cJSON_AddFalseToObject	cJSON.h	165;"	d
+cJSON_AddItemReferenceToArray	cJSON.cpp	/^void cJSON_AddItemReferenceToArray(cJSON *array, cJSON *item)$/;"	f
+cJSON_AddItemReferenceToObject	cJSON.cpp	/^void cJSON_AddItemReferenceToObject(cJSON *object, const char *string, cJSON *item)$/;"	f
+cJSON_AddItemToArray	cJSON.cpp	/^void cJSON_AddItemToArray(cJSON *array, cJSON *item)$/;"	f
+cJSON_AddItemToObject	cJSON.cpp	/^void   cJSON_AddItemToObject(cJSON *object, const char *string, cJSON *item)$/;"	f
+cJSON_AddItemToObjectCS	cJSON.cpp	/^void   cJSON_AddItemToObjectCS(cJSON *object, const char *string, cJSON *item)$/;"	f
+cJSON_AddNullToObject	cJSON.h	163;"	d
+cJSON_AddNumberToObject	cJSON.h	167;"	d
+cJSON_AddRawToObject	cJSON.h	169;"	d
+cJSON_AddStringToObject	cJSON.h	168;"	d
+cJSON_AddTrueToObject	cJSON.h	164;"	d
+cJSON_Array	cJSON.h	47;"	d
+cJSON_ArrayForEach	cJSON.h	178;"	d
+cJSON_CreateArray	cJSON.cpp	/^cJSON *cJSON_CreateArray(void)$/;"	f
+cJSON_CreateBool	cJSON.cpp	/^cJSON *cJSON_CreateBool(cjbool b)$/;"	f
+cJSON_CreateDoubleArray	cJSON.cpp	/^cJSON *cJSON_CreateDoubleArray(const double *numbers, int count)$/;"	f
+cJSON_CreateFalse	cJSON.cpp	/^cJSON *cJSON_CreateFalse(void)$/;"	f
+cJSON_CreateFloatArray	cJSON.cpp	/^cJSON *cJSON_CreateFloatArray(const float *numbers, int count)$/;"	f
+cJSON_CreateIntArray	cJSON.cpp	/^cJSON *cJSON_CreateIntArray(const int *numbers, int count)$/;"	f
+cJSON_CreateNull	cJSON.cpp	/^cJSON *cJSON_CreateNull(void)$/;"	f
+cJSON_CreateNumber	cJSON.cpp	/^cJSON *cJSON_CreateNumber(double num)$/;"	f
+cJSON_CreateObject	cJSON.cpp	/^cJSON *cJSON_CreateObject(void)$/;"	f
+cJSON_CreateRaw	cJSON.cpp	/^extern cJSON *cJSON_CreateRaw(const char *raw)$/;"	f
+cJSON_CreateString	cJSON.cpp	/^cJSON *cJSON_CreateString(const char *string)$/;"	f
+cJSON_CreateStringArray	cJSON.cpp	/^cJSON *cJSON_CreateStringArray(const char **strings, int count)$/;"	f
+cJSON_CreateTrue	cJSON.cpp	/^cJSON *cJSON_CreateTrue(void)$/;"	f
+cJSON_Delete	cJSON.cpp	/^void cJSON_Delete(cJSON *c)$/;"	f
+cJSON_DeleteItemFromArray	cJSON.cpp	/^void cJSON_DeleteItemFromArray(cJSON *array, int which)$/;"	f
+cJSON_DeleteItemFromObject	cJSON.cpp	/^void cJSON_DeleteItemFromObject(cJSON *object, const char *string)$/;"	f
+cJSON_DetachItemFromArray	cJSON.cpp	/^cJSON *cJSON_DetachItemFromArray(cJSON *array, int which)$/;"	f
+cJSON_DetachItemFromObject	cJSON.cpp	/^cJSON *cJSON_DetachItemFromObject(cJSON *object, const char *string)$/;"	f
+cJSON_Duplicate	cJSON.cpp	/^cJSON *cJSON_Duplicate(const cJSON *item, cjbool recurse)$/;"	f
+cJSON_False	cJSON.h	42;"	d
+cJSON_GetArrayItem	cJSON.cpp	/^cJSON *cJSON_GetArrayItem(const cJSON *array, int item)$/;"	f
+cJSON_GetArraySize	cJSON.cpp	/^int cJSON_GetArraySize(const cJSON *array)$/;"	f
+cJSON_GetErrorPtr	cJSON.cpp	/^const char *cJSON_GetErrorPtr(void)$/;"	f
+cJSON_GetObjectItem	cJSON.cpp	/^cJSON *cJSON_GetObjectItem(const cJSON *object, const char *string)$/;"	f
+cJSON_HasObjectItem	cJSON.cpp	/^cjbool cJSON_HasObjectItem(const cJSON *object, const char *string)$/;"	f
+cJSON_Hooks	cJSON.h	/^typedef struct cJSON_Hooks$/;"	s
+cJSON_Hooks	cJSON.h	/^} cJSON_Hooks;$/;"	t	typeref:struct:cJSON_Hooks
+cJSON_InitHooks	cJSON.cpp	/^void cJSON_InitHooks(cJSON_Hooks* hooks)$/;"	f
+cJSON_InsertItemInArray	cJSON.cpp	/^void cJSON_InsertItemInArray(cJSON *array, int which, cJSON *newitem)$/;"	f
+cJSON_IsReference	cJSON.h	51;"	d
+cJSON_Minify	cJSON.cpp	/^void cJSON_Minify(char *json)$/;"	f
+cJSON_NULL	cJSON.h	44;"	d
+cJSON_New_Item	cJSON.cpp	/^static cJSON *cJSON_New_Item(void)$/;"	f	file:
+cJSON_Number	cJSON.h	45;"	d
+cJSON_Object	cJSON.h	48;"	d
+cJSON_Parse	cJSON.cpp	/^cJSON *cJSON_Parse(const char *value)$/;"	f
+cJSON_ParseWithOpts	cJSON.cpp	/^cJSON *cJSON_ParseWithOpts(const char *value, const char **return_parse_end, cjbool require_null_terminated)$/;"	f
+cJSON_Print	cJSON.cpp	/^char *cJSON_Print(const cJSON *item)$/;"	f
+cJSON_PrintBuffered	cJSON.cpp	/^char *cJSON_PrintBuffered(const cJSON *item, int prebuffer, cjbool fmt)$/;"	f
+cJSON_PrintPreallocated	cJSON.cpp	/^int cJSON_PrintPreallocated(cJSON *item, char *buf, const int len, const cjbool fmt)$/;"	f
+cJSON_PrintUnformatted	cJSON.cpp	/^char *cJSON_PrintUnformatted(const cJSON *item)$/;"	f
+cJSON_Raw	cJSON.h	49;"	d
+cJSON_ReplaceItemInArray	cJSON.cpp	/^void cJSON_ReplaceItemInArray(cJSON *array, int which, cJSON *newitem)$/;"	f
+cJSON_ReplaceItemInObject	cJSON.cpp	/^void cJSON_ReplaceItemInObject(cJSON *object, const char *string, cJSON *newitem)$/;"	f
+cJSON_SetIntValue	cJSON.h	172;"	d
+cJSON_SetNumberHelper	cJSON.cpp	/^double cJSON_SetNumberHelper(cJSON *object, double number)$/;"	f
+cJSON_SetNumberValue	cJSON.h	175;"	d
+cJSON_String	cJSON.h	46;"	d
+cJSON_StringIsConst	cJSON.h	52;"	d
+cJSON_True	cJSON.h	43;"	d
+cJSON_Version	cJSON.cpp	/^extern const char* cJSON_Version(void)$/;"	f
+cJSON__h	cJSON.h	24;"	d
+cJSON_free	cJSON.cpp	/^static void (*cJSON_free)(void *ptr) = free;$/;"	v	file:
+cJSON_malloc	cJSON.cpp	/^static void *(*cJSON_malloc)(size_t sz) = malloc;$/;"	v	file:
+cJSON_strcasecmp	cJSON.cpp	/^static int cJSON_strcasecmp(const unsigned char *s1, const unsigned char *s2)$/;"	f	file:
+cJSON_strdup	cJSON.cpp	/^static unsigned char* cJSON_strdup(const unsigned char* str)$/;"	f	file:
+cache	traceReplay.h	/^	struct CacheManager cache;$/;"	m	struct:ReplayJob	typeref:struct:ReplayJob::CacheManager
+cache_file	traceReplay.h	/^	map<string, double>	cache_file;$/;"	m	struct:CacheManager
+cache_info	traceConfig.h	/^	vector<CacheInfo> cache_info;$/;"	m	struct:App
+cache_list	traceReplay.h	/^	vector<struct CacheInfo> cache_list;$/;"	m	struct:CacheManager
+cache_rename	traceReplay.h	/^	map<string, string>	cache_rename;$/;"	m	struct:CacheManager
+camera_create	traceReplay.cpp	/^	int camera_create;$/;"	m	struct:replay_stat	file:
+camera_delete	traceConfig.h	/^	int camera_delete;$/;"	m	struct:FullDisk
+camera_delete	traceReplay.cpp	/^	int camera_delete;$/;"	m	struct:replay_stat	file:
+child	cJSON.h	/^    struct cJSON *child;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+cjbool	cJSON.cpp	/^typedef int cjbool;$/;"	t	file:
+config	traceReplay.cpp	/^struct Config *config;$/;"	v	typeref:struct:Config
+create	simpleReplay.cpp	/^	int create;$/;"	m	struct:trace_stat	file:
+create_bgjob	traceReplay.cpp	/^struct ReplayJob* create_bgjob(struct App* app)$/;"	f
+create_camera_file	simpleReplay.cpp	/^int create_camera_file(char *mount_dir, char* camera_path, char* ext_path, unsigned long long size)$/;"	f
+create_camera_file	simpleReplay.cpp	/^int create_camera_file(char* camera_path, unsigned long long size)$/;"	f
+create_init_files	simpleReplay.cpp	/^int create_init_files(FILE* init_fp)$/;"	f
+create_init_files	simpleReplay.cpp	/^int create_init_files(char* mount_dir, char* init_name)$/;"	f
+create_reference	cJSON.cpp	/^static cJSON *create_reference(const cJSON *item)$/;"	f	file:
+create_replayjob	traceReplay.cpp	/^struct ReplayJob* create_replayjob(enum REPLAY_TYPE type, const char *name, const char *path, double cycle)$/;"	f
+create_replayjob	traceReplay.cpp	/^struct ReplayJob* create_replayjob(enum REPLAY_TYPE type, struct ReplayJob *replay)$/;"	f
+curLoading	traceReplay.h	/^	int curLoading;$/;"	m	struct:ReplayJob
+curTime	traceReplay.h	/^	double curTime;$/;"	m	struct:ReplayFile
+curTime	traceReplay.h	/^	double curTime;$/;"	m	struct:ReplayJob
+cycle	traceReplay.h	/^	double cycle;$/;"	m	struct:ReplayJob
+default_bg_cycle	traceConfig.h	/^	double default_bg_cycle;$/;"	m	struct:BasicApp
+default_bg_cycle	traceConfig.h	/^	double default_bg_cycle;$/;"	m	struct:NormalApp
+default_loading_cycle	traceConfig.h	/^	double default_loading_cycle;$/;"	m	struct:BasicApp
+default_loading_cycle	traceConfig.h	/^	double default_loading_cycle;$/;"	m	struct:NormalApp
+default_update_cycle	traceConfig.h	/^	double default_update_cycle;$/;"	m	struct:BasicApp
+default_update_cycle	traceConfig.h	/^	double default_update_cycle;$/;"	m	struct:NormalApp
+delete_camera_file	simpleReplay.cpp	/^int delete_camera_file(char* camera_path)$/;"	f
+delete_camera_file	simpleReplay.cpp	/^int delete_camera_file(char* mount_dir, char* camera_path)$/;"	f
+delete_count	traceConfig.h	/^	int delete_count;$/;"	m	struct:MulConf
+do_fulldisk	traceReplay.cpp	/^static int do_fulldisk(list <struct ReplayJob*> *queue, list<struct App*> *ins_list, $/;"	f	file:
+do_set_background_map	traceConfig.cpp	/^static int do_set_background_map(struct Config *config, char *file, struct App *cur_app)$/;"	f	file:
+do_trace_merge	traceConfig.cpp	/^static int do_trace_merge(struct App *app, struct PSName *ps_name, string type, int num)$/;"	f	file:
+do_trace_replay	simpleReplay.cpp	/^double do_trace_replay(char* mount_dir, char *input_name, struct ReplayJob *replay, double curTime)$/;"	f
+do_trace_replay	simpleReplay.cpp	/^double do_trace_replay(struct ReplayFile *load_replay, list<struct ReplayFile> *update_list)$/;"	f
+do_trace_replay	traceReplay.cpp	/^int do_trace_replay(double day)$/;"	f
+ensure	cJSON.cpp	/^static unsigned char* ensure(printbuffer *p, size_t needed)$/;"	f	file:
+false	cJSON.cpp	52;"	d	file:
+file_append	simpleReplay.cpp	/^int file_append(char *path, long long int write_off, $/;"	f
+file_create	simpleReplay.cpp	/^int file_create(char *path)$/;"	f
+file_fsync	simpleReplay.cpp	/^int file_fsync(char *path, int option)$/;"	f
+file_mkdir	simpleReplay.cpp	/^int file_mkdir(char *path)$/;"	f
+file_rename	simpleReplay.cpp	/^int file_rename(char *path1, char *path2)$/;"	f
+file_rmdir	simpleReplay.cpp	/^int file_rmdir(char *path)$/;"	f
+file_truncate	simpleReplay.cpp	/^int file_truncate(char *path,$/;"	f
+file_unlink	simpleReplay.cpp	/^int file_unlink(char *path)$/;"	f
+file_write	simpleReplay.cpp	/^int file_write(char *path, long long int write_off, $/;"	f
+filename	traceConfig.cpp	/^	string filename;$/;"	m	struct:Traceinfo	file:
+firstByteMark	cJSON.cpp	/^static const unsigned char firstByteMark[5] =$/;"	v	file:
+fp	traceConfig.cpp	/^	FILE *fp;$/;"	m	struct:Traceinfo	file:
+free_fn	cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
+fsync	simpleReplay.cpp	/^	int fsync;$/;"	m	struct:trace_stat	file:
+fulldisk	traceConfig.h	/^	struct FullDisk fulldisk;$/;"	m	struct:Config	typeref:struct:Config::FullDisk
+get_mount_point	traceReplay.cpp	/^static struct mntent *get_mount_point(const char *name)$/;"	f	file:
+get_time	simpleReplay.cpp	/^static double get_time(char *line)$/;"	f	file:
+get_utilization	traceReplay.cpp	/^static double get_utilization(void)$/;"	f	file:
+global_ep	cJSON.cpp	/^static const unsigned char *global_ep = NULL;$/;"	v	file:
+init_replayjob	traceReplay.cpp	/^int init_replayjob(list<struct ReplayJob*> *ReplayJob_queue, list<struct App*> *Normal_list)$/;"	f
+input_name	traceReplay.h	/^	string input_name;$/;"	m	struct:ReplayFile
+insert_replayqueue	traceReplay.cpp	/^int insert_replayqueue(list<struct ReplayJob*> *ReplayJob_queue, struct ReplayJob* job)$/;"	f
+install	traceReplay.cpp	/^	int install;$/;"	m	struct:replay_stat	file:
+install_cycle	traceConfig.h	/^	double install_cycle;$/;"	m	struct:NormalApp
+job	traceReplay.h	/^	struct ReplayJob *job;$/;"	m	struct:ReplayFile	typeref:struct:ReplayFile::ReplayJob
+length	cJSON.cpp	/^    size_t length;$/;"	m	struct:__anon1	file:
+lifespan	traceConfig.h	/^	double lifespan;$/;"	m	struct:CacheInfo
+limit	traceConfig.h	/^	double limit;$/;"	m	struct:FullDisk
+line	traceConfig.cpp	/^	string line;$/;"	m	struct:Traceinfo	file:
+load_replayjob	traceReplay.cpp	/^int load_replayjob(list <struct ReplayJob*> *ReplayJob_queue, list<struct App*> *ins_list, list<struct App*> *unins_list, double *day)$/;"	f
+loading	traceReplay.cpp	/^	int loading;$/;"	m	struct:replay_stat	file:
+loading_cycle	traceConfig.h	/^	double loading_cycle;$/;"	m	struct:App
+loading_file	traceConfig.h	/^	int loading_file;$/;"	m	struct:App
+main	traceReplay.cpp	/^int main (int argc, char *argv[])$/;"	f
+malloc_fn	cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
+maxLoading	traceReplay.h	/^	int maxLoading;$/;"	m	struct:ReplayJob
+max_size	traceConfig.h	/^	unsigned long long max_size;$/;"	m	struct:MulConf
+min_size	traceConfig.h	/^	unsigned long long min_size;$/;"	m	struct:MulConf
+mkdir	simpleReplay.cpp	/^	int mkdir;$/;"	m	struct:trace_stat	file:
+mkdir_all_path	simpleReplay.cpp	/^int mkdir_all_path(const char *path)$/;"	f
+mode_flag	traceReplay.cpp	/^int mode_flag;$/;"	v
+mount_dir	traceConfig.h	/^	char mount_dir[PATH_MAX + 1];$/;"	m	struct:Config
+mount_dir	traceReplay.h	/^	string mount_dir;$/;"	m	struct:ReplayFile
+mul_camera	traceConfig.h	/^	struct MulConf mul_camera;$/;"	m	struct:Multimedia	typeref:struct:Multimedia::MulConf
+mul_delete	traceConfig.h	/^	int mul_delete;$/;"	m	struct:MulDelete
+mul_delete	traceConfig.h	/^	vector<struct MulDelete> mul_delete;	$/;"	m	struct:FullDisk
+mul_info	traceReplay.h	/^	unsigned long long mul_info[2];$/;"	m	struct:ReplayJob
+mul_others	traceConfig.h	/^	vector<struct MulConf> mul_others;$/;"	m	struct:Multimedia
+multi	traceConfig.h	/^	struct Multimedia multi;$/;"	m	struct:Config	typeref:struct:Config::Multimedia
+multimedia_path	traceConfig.h	/^	string multimedia_path;$/;"	m	struct:MulConf
+name	traceConfig.h	/^	char name[MAX_NAME];$/;"	m	struct:App
+name	traceConfig.h	/^	string name;$/;"	m	struct:MulConf
+name	traceConfig.h	/^	string name;$/;"	m	struct:MulDelete
+name	traceReplay.h	/^	char name[MAX_NAME];$/;"	m	struct:ReplayJob
+next	cJSON.h	/^    struct cJSON *next;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+noalloc	cJSON.cpp	/^    cjbool noalloc;$/;"	m	struct:__anon1	file:
+normal_app	traceConfig.h	/^	struct NormalApp normal_app;$/;"	m	struct:Config	typeref:struct:Config::NormalApp
+offset	cJSON.cpp	/^    size_t offset;$/;"	m	struct:__anon1	file:
+parse_apps	traceConfig.cpp	/^static int parse_apps(cJSON *apps_obj, struct App *apps, $/;"	f	file:
+parse_array	cJSON.cpp	/^static const unsigned char *parse_array(cJSON *item, const unsigned char *value, const unsigned char **ep)$/;"	f	file:
+parse_basic_app	traceConfig.cpp	/^static int parse_basic_app(cJSON *basic_obj, struct Config *config)$/;"	f	file:
+parse_config	traceConfig.cpp	/^int parse_config(char *config_name, struct Config *config)$/;"	f
+parse_fulldisk	traceConfig.cpp	/^static int parse_fulldisk(cJSON *ps_full_obj, struct Config *config)$/;"	f	file:
+parse_hex4	cJSON.cpp	/^static unsigned parse_hex4(const unsigned char *str)$/;"	f	file:
+parse_multimedia	traceConfig.cpp	/^static int parse_multimedia(cJSON *multi_obj, struct Config *config)$/;"	f	file:
+parse_normal_app	traceConfig.cpp	/^static int parse_normal_app(cJSON *normal_obj, struct Config *config)$/;"	f	file:
+parse_number	cJSON.cpp	/^static const unsigned char *parse_number(cJSON *item, const unsigned char *num)$/;"	f	file:
+parse_object	cJSON.cpp	/^static const unsigned char *parse_object(cJSON *item, const unsigned char *value, const unsigned char **ep)$/;"	f	file:
+parse_ps_name	traceConfig.cpp	/^static int parse_ps_name(cJSON *ps_name_obj, struct Config *config)$/;"	f	file:
+parse_string	cJSON.cpp	/^static const unsigned char *parse_string(cJSON *item, const unsigned char *str, const unsigned char **ep)$/;"	f	file:
+parse_time	traceConfig.cpp	/^static double parse_time(string line)$/;"	f	file:
+parse_value	cJSON.cpp	/^static const unsigned  char *parse_value(cJSON *item, const unsigned char *value, const unsigned char **ep)$/;"	f	file:
+path	traceConfig.h	/^	char path[PATH_MAX+1];$/;"	m	struct:App
+path	traceConfig.h	/^	string path;$/;"	m	struct:CacheInfo
+path	traceConfig.h	/^	string path;$/;"	m	struct:MulDelete
+path	traceReplay.h	/^	char path[PATH_MAX + 1];$/;"	m	struct:ReplayJob
+pop_update	simpleReplay.cpp	/^static FILE* pop_update(list<struct ReplayFile> *update_list)$/;"	f	file:
+pow2gt	cJSON.cpp	/^static int pow2gt (int x)$/;"	f	file:
+prev	cJSON.h	/^    struct cJSON *prev;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+prev_out_name	traceReplay.cpp	/^string prev_out_name;$/;"	v
+print_array	cJSON.cpp	/^static unsigned char *print_array(const cJSON *item, size_t depth, cjbool fmt, printbuffer *p)$/;"	f	file:
+print_help	traceReplay.cpp	/^int print_help(void)$/;"	f
+print_number	cJSON.cpp	/^static unsigned char *print_number(const cJSON *item, printbuffer *p)$/;"	f	file:
+print_object	cJSON.cpp	/^static unsigned char *print_object(const cJSON *item, size_t depth, cjbool fmt, printbuffer *p)$/;"	f	file:
+print_string	cJSON.cpp	/^static unsigned char *print_string(const cJSON *item, printbuffer *p)$/;"	f	file:
+print_string_ptr	cJSON.cpp	/^static unsigned char *print_string_ptr(const unsigned char *str, printbuffer *p)$/;"	f	file:
+print_value	cJSON.cpp	/^static unsigned char *print_value(const cJSON *item, size_t depth, cjbool fmt, printbuffer *p)$/;"	f	file:
+printbuffer	cJSON.cpp	/^} printbuffer;$/;"	t	typeref:struct:__anon1	file:
+ps_install	traceConfig.h	/^	vector<string> ps_install;$/;"	m	struct:PSName
+ps_loading	traceConfig.h	/^	vector<string> ps_loading;$/;"	m	struct:PSName
+ps_name	traceConfig.h	/^	char ps_name[MAX_NAME];$/;"	m	struct:App
+ps_name	traceConfig.h	/^	struct PSName ps_name;$/;"	m	struct:Config	typeref:struct:Config::PSName
+ps_uninstall	traceConfig.h	/^	vector<string> ps_uninstall;$/;"	m	struct:PSName
+ps_update	traceConfig.h	/^	vector<string> ps_update;$/;"	m	struct:PSName
+remove_directory	simpleReplay.cpp	/^int remove_directory(const char *path)$/;"	f
+rename	simpleReplay.cpp	/^	int rename;$/;"	m	struct:trace_stat	file:
+replay_basic_install	traceReplay.cpp	/^int replay_basic_install(void)$/;"	f
+replay_bg	traceReplay.cpp	/^int replay_bg(struct ReplayJob* replay)$/;"	f
+replay_bg	traceReplay.cpp	/^int replay_bg(struct ReplayJob* replay, list<struct ReplayFile> *update_list)$/;"	f
+replay_camera	traceReplay.cpp	/^int replay_camera(struct ReplayJob* replay)$/;"	f
+replay_camera_delete	traceReplay.cpp	/^int replay_camera_delete(struct ReplayJob* replay)$/;"	f
+replay_install	traceReplay.cpp	/^int replay_install(list<struct ReplayJob*> *jobqueue, list<struct App*> *ins_list, list<struct App*> *unins_list, double curTime)$/;"	f
+replay_loading	traceReplay.cpp	/^int replay_loading(struct ReplayJob* replay)$/;"	f
+replay_loading	traceReplay.cpp	/^int replay_loading(struct ReplayJob* replay, list<struct ReplayFile> *update_list)$/;"	f
+replay_stat	traceReplay.cpp	/^struct replay_stat replay_stat;$/;"	v	typeref:struct:replay_stat
+replay_stat	traceReplay.cpp	/^struct replay_stat$/;"	s	file:
+replay_uninstall	traceReplay.cpp	/^int replay_uninstall(list<struct ReplayJob*> *jobqueue, list<struct App*> *ins_list, list<struct App*> *unins_list, double curTime)$/;"	f
+replay_update	traceReplay.cpp	/^int replay_update(struct ReplayJob* replay)$/;"	f
+replay_update	traceReplay.cpp	/^int replay_update(struct ReplayJob* replay, list<struct ReplayFile> *update_list)$/;"	f
+rmdir	simpleReplay.cpp	/^	int rmdir;$/;"	m	struct:trace_stat	file:
+set_background_map	traceConfig.cpp	/^int set_background_map(struct Config *config)$/;"	f
+skip	cJSON.cpp	/^static const unsigned char *skip(const unsigned char *in)$/;"	f	file:
+store_replayjob	traceReplay.cpp	/^int store_replayjob(list <struct ReplayJob*> *ReplayJob_queue, list<struct App*> *ins_list, double day)$/;"	f
+string	cJSON.h	/^    char *string;$/;"	m	struct:cJSON
+suffix_object	cJSON.cpp	/^static void suffix_object(cJSON *prev, cJSON *item)$/;"	f	file:
+take_count	traceConfig.h	/^	int take_count;$/;"	m	struct:MulConf
+time	traceConfig.cpp	/^	double time;$/;"	m	struct:Traceinfo	file:
+trace_init	traceReplay.cpp	/^int trace_init(void)$/;"	f
+trace_merge	traceConfig.cpp	/^int trace_merge(struct Config *config)$/;"	f
+trace_replay	simpleReplay.cpp	/^double trace_replay(char *input_name)$/;"	f
+trace_replay	traceReplay.cpp	/^static int trace_replay(char *config_name, int day)$/;"	f	file:
+trace_stat	simpleReplay.cpp	/^struct trace_stat$/;"	s	file:
+true	cJSON.cpp	51;"	d	file:
+type	cJSON.h	/^    int type;$/;"	m	struct:cJSON
+type	traceReplay.h	/^	enum REPLAY_TYPE type;$/;"	m	struct:ReplayJob	typeref:enum:ReplayJob::REPLAY_TYPE
+uninstall	traceReplay.cpp	/^	int uninstall;$/;"	m	struct:replay_stat	file:
+uninstall_app	traceConfig.h	/^	int uninstall_app;$/;"	m	struct:FullDisk
+uninstall_cycle	traceConfig.h	/^	double uninstall_cycle;$/;"	m	struct:NormalApp
+uninstall_replayqueue	traceReplay.cpp	/^int uninstall_replayqueue(list<struct ReplayJob*> *ReplayJob_queue, const char *path)$/;"	f
+unlink	simpleReplay.cpp	/^	int unlink;$/;"	m	struct:trace_stat	file:
+update	cJSON.cpp	/^static size_t update(const printbuffer *p)$/;"	f	file:
+update	traceReplay.cpp	/^	int update;$/;"	m	struct:replay_stat	file:
+update_cycle	traceConfig.h	/^	double update_cycle;$/;"	m	struct:App
+valuedouble	cJSON.h	/^    double valuedouble;$/;"	m	struct:cJSON
+valueint	cJSON.h	/^    int valueint;$/;"	m	struct:cJSON
+valuestring	cJSON.h	/^    char *valuestring;$/;"	m	struct:cJSON
+write_append	simpleReplay.cpp	/^	int write_append;$/;"	m	struct:trace_stat	file:
+write_overwrite	simpleReplay.cpp	/^	int write_overwrite;$/;"	m	struct:trace_stat	file:

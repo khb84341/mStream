@@ -1,0 +1,376 @@
+{
+	"MOUNT_DIR": "data",
+	"INIT_FILEMAP": "init-file/180820_init",
+	"MULTIMEDIA":
+	{
+		"CAMERA":
+		{
+			"NAME": "camera",
+			"MULTIMEDIA_PATH": "data/media/0/DCIM/Camera",
+			"TAKE_COUNT":10, "DELETE_COUNT":1, "SIZE_UNIT(B)":1048576, "MIN_SIZE":0.5, "MAX_SIZE":4, "INIT_COUNT": 0
+		},
+		"OTHERS":
+		[
+			{
+				"NAME": "movie", "MULTIMEDIA_PATH": "data/media/0/movie/",
+				"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":2048, "MAX_SIZE":2048, "INIT_COUNT": 0
+			},
+			{
+				"NAME": "music", "MULTIMEDIA_PATH": "data/media/0/music/",
+				"TAKE_COUNT":0, "DELETE_COUNT":0, "SIZE_UNIT(B)":1048576, "MIN_SIZE":4, "MAX_SIZE":12, "INIT_COUNT": 0
+			}
+		]
+	},
+	"BASIC_APP":
+	{
+		"DEFAULT_UPDATE_CYCLE": 14,
+		"DEFAULT_LOADING_CYCLE": 1,
+		"DEFAULT_BG_CYCLE": 100,
+		"APPS":
+			[
+				{"NAME": "chrome", "PATH": "new_part/trace-mmap/chrome", 
+				"PS_NAME": "com.android.chrome", "LOADING_FILE":7,
+				"LOADING_CYCLE":1.2,
+				"CACHE":
+					[
+						{"PATH": "/data/com.android.chrome/cache/Cache/", "MAX_CACHE": 120, "EVICT_RATIO": 0, "UNIQUE": 0.178302, "ONETIMES": 0.234568, "ZIPF_S": 1.06309,  "MAX_REF": 112}
+					]
+				},
+				{"NAME": "facebook", "PATH": "new_part/trace-mmap/facebook", 
+				"PS_NAME": "com.facebook.katana", "LOADING_FILE":8,
+				"LOADING_CYCLE":1.8,
+				"CACHE":
+					[
+						{"PATH": "/data/com.facebook.katana/cache/compactdisk/", "MAX_CACHE": 2, "EVICT_RATIO": 0, "UNIQUE": 0.857143, "ONETIMES": 0.877778, "ZIPF_S": 0.492543,  "MAX_REF": 3},
+						{"PATH": "/data/com.facebook.katana/cache/ExoPlayerCacheDir/", "MAX_CACHE": 60, "EVICT_RATIO": 0, "UNIQUE": 0.0351378, "ONETIMES": 0.389414, "ZIPF_S": 1.08941,  "MAX_REF": 161},
+						{"PATH": "/data/com.facebook.katana/files/NewsFeed/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.555556, "ONETIMES": 0.4, "ZIPF_S": 0.670672,  "MAX_REF": 2},
+						{"PATH": "/data/com.facebook.katana/files/graph_cursor/", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH":"/data/com.facebook.katana/cache/overtheair/", "MAX_CACHE": 0.3, "EVICT_RATIO": 0, "UNIQUE": 0.674157, "ONETIMES": 0.566667, "ZIPF_S": 0.158743,  "MAX_REF": 2}
+					]
+				},
+				{"name": "instagram", "path": "new_part/trace-mmap/instagram", 
+				"ps_name": "com.instagram.android", "LOADING_FILE":8,
+				"LOADING_CYCLE":2.35,
+				"cache":
+					[
+						{"PATH": "/media/0/Android/data/com.instagram.android/cache/ExoPlayerCacheDir/", "MAX_CACHE": 70, "EVICT_RATIO": 0, "UNIQUE": 0.2, "ONETIMES": 0.782609, "ZIPF_S": 1.42461,  "MAX_REF": 97},
+						{"PATH": "/data/com.instagram.android/cache/http_responses/", "MAX_CACHE": 0.003, "EVICT_RATIO": 0, "UNIQUE": 0.810127, "ONETIMES": 0.828125, "ZIPF_S": 0.414001,  "MAX_REF": 3},
+						{"PATH": "/data/com.instagram.android/cache/images/", "MAX_CACHE": 25, "EVICT_RATIO": 0, "UNIQUE": 0.644912, "ONETIMES": 0.915952, "ZIPF_S": 1.23119,  "MAX_REF": 90},
+						{"PATH":"/data/com.instagram.android/files/analytics", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.674157, "ONETIMES": 0.566667, "ZIPF_S": 0.158743,  "MAX_REF": 2}
+					]
+				},
+				{"NAME": "twitter", "PATH": "new_part/trace-mmap/twitter", 
+				"PS_NAME": "com.twitter.android", "LOADING_FILE":8,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/image_cache/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.913177, "ONETIMES": 0.935123, "ZIPF_S": 0.395625,  "MAX_REF": 3},
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/videos/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 0.543689, "ONETIMES": 0.714286, "ZIPF_S": 0.74187,  "MAX_REF": 6},
+						{"PATH": "/data/com.twitter.android/cache/precache/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/image_cache/", "MAX_CACHE": 9, "EVICT_RATIO": 0, "UNIQUE": 0.913177, "ONETIMES": 0.935123, "ZIPF_S": 0.395625,  "MAX_REF": 3},
+						{"PATH": "/media/0/Android/data/com.twitter.android/cache/photos/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.666667, "ONETIMES": 0.666667, "ZIPF_S": 1,  "MAX_REF": 2}						
+					]
+				},
+				{"NAME": "youtube", "PATH": "new_part/trace-mmap/youtube", 
+				"PS_NAME": "com.google.android.youtube", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.72,
+				"CACHE":
+					[
+						{"PATH": "/media/0/Android/data/com.google.android.youtube/cache/exo/", "MAX_CACHE": 140, "EVICT_RATIO": 0, "UNIQUE": 0.442563, "ONETIMES": 0.674317, "ZIPF_S": 0.61408,  "MAX_REF": 14},
+						{"PATH": "/data/com.google.android.youtube/cache/zeroprefix.cache/", "MAX_CACHE": 0.09, "EVICT_RATIO": 0, "UNIQUE": 0.823308, "ONETIMES": 0.899543, "ZIPF_S": 0.676967,  "MAX_REF": 6}
+					]
+				},
+				{"NAME": "googlemap", "PATH": "new_part/trace-mmap/googlemap", 
+				"PS_NAME": "com.google.android.apps.maps", "LOADING_FILE":7,
+				"LOADING_CYCLE":5,
+				"CACHE":
+					[
+						{"PATH": "/data/com.google.android.apps.maps/cache/image_manager_disk_cache/", "MAX_CACHE": 0, "EVICT_RATIO": 0, "UNIQUE": 0.994062, "ONETIMES": 0.994026, "ZIPF_S": 0,  "MAX_REF": 1}
+					]
+				},
+				{"NAME": "calc", "PATH": "new_part/trace-mmap/calc", 
+				"PS_NAME": "com.google.android.calculator", "LOADING_FILE":7,
+				"LOADING_CYCLE":6.67,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "calendar", "PATH": "new_part/trace-mmap/calendar",
+				"PS_NAME": "com.google.android.calendar", "LOADING_FILE":7,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "keep", "PATH": "new_part/trace-mmap/keep",
+				"PS_NAME": "com.google.android.keep", "LOADING_FILE":7,
+				"LOADING_CYCLE":4,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gmail", "PATH": "new_part/trace-mmap/gmail",
+				"PS_NAME": "com.google.android.gm", "LOADING_FILE":8,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gdocs", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.docs", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gfitness", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.fitness", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "googleplus", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.plus", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gplay", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.android.vending", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gppt", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.docs.editors.slides", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gsheet", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.docs.editors.sheets", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "gphoto", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.apps.photos", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				},
+				{"NAME": "webview", "PATH": "new_part/trace-mmap/basic", 
+				"PS_NAME": "com.google.android.webview", "LOADING_FILE":0,
+				"LOADING_CYCLE":0,
+				"CACHE":
+					[
+					]
+				}
+			]
+	},
+	"NORMAL_APP":
+	{
+		"APP_INSTALL_CYCLE": 0.1,
+		"APP_UNINSTALL_CYCLE": 1000,
+		"DEFAULT_UPDATE_CYCLE": 14,
+		"DEFAULT_LOADING_CYCLE": 1,
+		"DEFAULT_BG_CYCLE": 100,
+		"APPS":
+			[
+				{"NAME": "clash", "PATH": "new_part/trace-mmap/clash", 
+				"PS_NAME": "com.supercell.clashroyale", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.49,
+				"CACHE":
+					[
+						{"PATH": "cache/org.chromium.android_webview/", "MAX_CACHE": 1, "EVICT_RATIO": 0, "UNIQUE": 0.0966981, "ONETIMES": 0.0487805, "ZIPF_S": 0.445474,  "MAX_REF": 25},
+						{"PATH": "/data/com.supercell.clashroyale/cache/swfcache/", "MAX_CACHE": 250, "EVICT_RATIO": 0, "UNIQUE": 0.77095, "ONETIMES": 0.702899, "ZIPF_S": 0,  "MAX_REF": 1},
+						{"PATH": "/data/com.supercell.clashroyale/cache/download/", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0}
+					]
+				},
+				{"NAME": "angrybirds", "PATH": "new_part/trace-mmap/angrybirds", 
+				"PS_NAME": "com.rovio.angrybirds", "LOADING_FILE":8,
+				"LOADING_CYCLE":0.95,
+				"CACHE":
+					[
+						{"PATH": "/data/com.rovio.angrybirds/cache/org.chromium.android_webview/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.0831025, "ONETIMES": 0.1, "ZIPF_S": 1.49898,  "MAX_REF": 54},
+						{"PATH": "/media/0/Android/data/com.rovio.angrybirds/cache/UnityAdsCache/", "MAX_CACHE": 8, "EVICT_RATIO": 0, "UNIQUE": 0.307692, "ONETIMES": 0.25, "ZIPF_S": 1.20714,  "MAX_REF": 9},
+						{"PATH": "/media/0/Android/data/com.rovio.angrybirds/cache/video-cache/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 0.00234329, "ONETIMES": 0.5, "ZIPF_S": 0.294128,  "MAX_REF": 938},
+						{"PATH": "/data/com.rovio.angrybirds/cache/fbAvatarCache/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.75, "ONETIMES": 0.666667, "ZIPF_S": 0,  "MAX_REF": 1},
+						{"PATH": "/data/com.rovio.angrybirds/cache/InGameNative.EpisodeSelector/", "MAX_CACHE": 1, "EVICT_RATIO": 37, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/data/com.rovio.angrybirds/cache/InGameNative.StartScreen/", "MAX_CACHE": 1, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/data/com.rovio.angrybirds/cache/MainMenuPopup/", "MAX_CACHE": 1, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/data/com.rovio.angrybirds/cache/MainMenuPromo/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/data/com.rovio.angrybirds/cache/RewardNative.Giftbox/", "MAX_CACHE": 1, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0}
+					]
+				},
+				{"NAME": "flipboard", "PATH": "new_part/trace-mmap/flipboard", 
+				"PS_NAME": "flipboard.app", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.14,
+				"CACHE":
+					[
+						{"PATH": "/data/flipboard.app/files/.Fabric/", "MAX_CACHE": 0.002, "EVICT_RATIO": 0, "UNIQUE": 0.846154, "ONETIMES": 0.848485, "ZIPF_S": 0.410827,  "MAX_REF": 2},
+						{"PATH": "/data/flipboard.app/files/shared/", "MAX_CACHE": 0.3, "EVICT_RATIO": 0, "UNIQUE": 0.428571, "ONETIMES": 0.416667, "ZIPF_S": 0.788264,  "MAX_REF": 5},
+						{"PATH": "/media/0/Android/data/flipboard.app/files/image-download-cache/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.576819, "ONETIMES": 0.841121, "ZIPF_S": 1.09393,  "MAX_REF": 28},
+						{"PATH": "/data/flipboard.app/cache/org.chromium.android_webview/", "MAX_CACHE": 40, "EVICT_RATIO": 0, "UNIQUE": 0.172069, "ONETIMES": 0.29686, "ZIPF_S": 1.00371,  "MAX_REF": 163},
+						{"PATH": "/data/flipboard.app/cache/requestLogs", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/data/flipboard.app/cache/item-cache/", "MAX_CACHE": 0.3, "EVICT_RATIO": 0, "UNIQUE": 0.125, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 7},
+						{"PATH": "/data/flipboard.app/cache/meta-cache/", "MAX_CACHE": 0.01, "EVICT_RATIO": 0, "UNIQUE": 0.195402, "ONETIMES": 0, "ZIPF_S": 0.480754,  "MAX_REF": 15},
+						{"PATH": "/data/flipboard.app/cache/sidebar-cache/", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 0.25, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 3}
+					]
+				},
+				{"NAME": "cnn", "PATH": "new_part/trace-mmap/cnn", 
+				"PS_NAME": "cnn.mobile.android.phone", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.72,
+				"CACHE":
+					[
+						{"PATH": "/data/com.cnn.mobile.android.phone/cache/org.chromium.android_webview/", "MAX_CACHE": 20, "EVICT_RATIO": 0, "UNIQUE": 0.239936, "ONETIMES": 0.451586, "ZIPF_S": 1.02376,  "MAX_REF": 80},
+						{"PATH": "/data/com.cnn.mobile.android.phone/cache/video-cache/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 0.0227273, "ONETIMES": 0.5, "ZIPF_S": 0,  "MAX_REF": 86},
+						{"PATH": "/data/com.cnn.mobile.android.phone/cache/image_manager_disk_cache/", "MAX_CACHE": 250, "EVICT_RATIO": 0, "UNIQUE": 0.109428, "ONETIMES": 0.735897, "ZIPF_S": 1.67432,  "MAX_REF": 152},
+						{"PATH": "/data/com.cnn.mobile.android.phone/files/httpcache/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.152516, "ONETIMES": 0.329897, "ZIPF_S": 0.992824,  "MAX_REF": 73},
+						{"PATH": "/data/com.cnn.mobile.android.phone/files/payloads/", "MAX_CACHE": 0.002, "EVICT_RATIO": 0, "UNIQUE": 0.495564, "ONETIMES": 0.00767263, "ZIPF_S": 0.0657126,  "MAX_REF": 2}
+					]
+				},
+				{"NAME": "amazon", "PATH": "new_part/trace-mmap/amazon", 
+				"PS_NAME": "amazon.mShop.android.shopping", "LOADING_FILE":7,
+				"LOADING_CYCLE":1.3,
+				"CACHE":
+					[
+						{"PATH": "/cache/org.chromium.android_webview/", "MAX_CACHE": 50, "EVICT_RATIO": 0, "UNIQUE": 0.209927, "ONETIMES": 0.133698, "ZIPF_S": 0.845989,  "MAX_REF": 168},
+						{"PATH": "/data/com.amazon.mShop.android.shopping/cache/org.chromium.android_webview/", "MAX_CACHE": 0.7, "EVICT_RATIO": 0, "UNIQUE": 0.341398, "ONETIMES": 0.724409, "ZIPF_S": 1.33803,  "MAX_REF": 36},
+						{"PATH": "/data/com.amazon.mShop.android.shopping/app_manifest-store/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.25, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 3},
+						{"PATH": "/data/com.amazon.mShop.android.shopping/app_ssnap-cert-store/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.25, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 3},
+						{"PATH": "/data/com.amazon.mShop.android.shopping/app_ssnap-feature-integ-file-store/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.25, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 3},
+						{"PATH": "/data/com.amazon.mShop.android.shopping/app_ssnap-sign-store/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 0.25, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 3},
+						{"PATH": "/data/com.amazon.mShop.android.shopping/cache/volley/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.0481283, "ONETIMES": 0, "ZIPF_S": 0.539417,  "MAX_REF": 29}
+					]
+				},
+				{"NAME": "ebay", "PATH": "new_part/trace-mmap/ebay", 
+				"PS_NAME": "com.ebay.mobile", "LOADING_FILE":7,
+				"LOADING_CYCLE":2.35,
+				"CACHE":
+					[
+						{"PATH": "/data/com.ebay.mobile/cache/cacheManager/", "MAX_CACHE": 25, "EVICT_RATIO": 0, "UNIQUE": 0.393713, "ONETIMES": 0.0718563, "ZIPF_S": 0.453624,  "MAX_REF": 26},
+						{"PATH": "/data/com.ebay.mobile/files/.Fabric/", "MAX_CACHE": 0.002, "EVICT_RATIO": 0, "UNIQUE": 0.0383065, "ONETIMES": 0.657895, "ZIPF_S": 0.704213,  "MAX_REF": 125}
+					]
+				},
+				{"NAME": "firefox", "PATH": "new_part/trace-mmap/firefox", 
+				"PS_NAME": "org.mozilla.firefox", "LOADING_FILE":7,
+				"LOADING_CYCLE":2,
+				"CACHE":
+					[
+						{"PATH": "/data/org.mozilla.firefox/cache/icons/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.566038, "ONETIMES": 0.733333, "ZIPF_S": 0.894198,  "MAX_REF": 24},
+						{"PATH": "/data/org.mozilla.firefox/cache/picasso-cache/", "MAX_CACHE": 0.7, "EVICT_RATIO": 0, "UNIQUE": 0.916667, "ONETIMES": 0.909091, "ZIPF_S": 0,  "MAX_REF": 1},
+						{"PATH": "/data/org.mozilla.firefox/app_tmpdir/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.0102041, "ONETIMES": 0, "ZIPF_S": 0,  "MAX_REF": 97}
+					]
+				},
+				{"NAME": "subways", "PATH": "new_part/trace-mmap/subways", 
+				"PS_NAME": "com.kiloo.subwaysurf", "LOADING_FILE":7,
+				"LOADING_CYCLE":0.17,
+				"CACHE":
+					[
+						{"PATH": "/data/com.kiloo.subwaysurf/cache/.chartboost/", "MAX_CACHE": 3, "EVICT_RATIO": 0, "UNIQUE": 0.22449, "ONETIMES": 0.272727, "ZIPF_S": 0.833599,  "MAX_REF": 17},
+						{"PATH": "/data/com.kiloo.subwaysurf/cache/org.chromium.android_webview/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.410072, "ONETIMES": 0.368421, "ZIPF_S": 0.795283,  "MAX_REF": 14},
+						{"PATH": "/media/0/Android/data/com.kiloo.subwaysurf/cache/supersonicads/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.642857, "ONETIMES": 0.444444, "ZIPF_S": 0,  "MAX_REF": 1},
+						{"PATH": "/data/com.kiloo.subwaysurf/files/AssetBundleVersion/", "MAX_CACHE": 0.1, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/data/com.kiloo.subwaysurf/files/Tapjoy/", "MAX_CACHE": 1.2, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/media/0/Android/data/com.kiloo.subwaysurf/cache/UnityShaderCache/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.951456, "ONETIMES": 0.969388, "ZIPF_S": 1.06299,  "MAX_REF": 3},
+						{"PATH": "/data/com.kiloo.subwaysurf/cache/webclientcache/", "MAX_CACHE": 0.06, "EVICT_RATIO": 0, "UNIQUE": 0.78125, "ONETIMES": 0.733333, "ZIPF_S": 0.116916,  "MAX_REF": 2}
+					]
+				},
+				{"NAME": "airbnb", "PATH": "new_part/trace-mmap/airbnb", 
+				"PS_NAME": "com.airbnb.android", "LOADING_FILE":7,
+				"LOADING_CYCLE":7,
+				"CACHE":
+					[
+						{"PATH": "/data/com.airbnb.android/cache/okhttp/", "MAX_CACHE": 0.5, "EVICT_RATIO": 0, "UNIQUE": 0.452211, "ONETIMES": 0.611987, "ZIPF_S": 0.913871,  "MAX_REF": 38},
+						{"PATH": "/data/com.airbnb.android/cache/image_manager_disk_cache/", "MAX_CACHE": 250, "EVICT_RATIO": 0, "UNIQUE": 0.761408, "ONETIMES": 0.828767, "ZIPF_S": 0.615254,  "MAX_REF": 9}
+					]
+				},
+				{"NAME": "aliexpress", "PATH": "new_part/trace-mmap/aliexpress", 
+				"PS_NAME": "com.alibaba.aliexpresshd", "LOADING_FILE":7,
+				"LOADING_CYCLE":3.33,
+				"CACHE":
+					[
+						{"PATH": "/data/com.alibaba.aliexpresshd/cache/image_manager_disk_cache/", "MAX_CACHE": 250, "EVICT_RATIO": 0, "UNIQUE": 0.727869, "ONETIMES": 0.831832, "ZIPF_S": 0.6988,  "MAX_REF": 12},
+						{"PATH": "/data/com.alibaba.aliexpresshd/cache/org.chromium.android_webview/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.285981, "ONETIMES": 0.235294, "ZIPF_S": 0.631758,  "MAX_REF": 14},
+						{"PATH": "/data/com.alibaba.aliexpresshd/cache/weexcache/", "MAX_CACHE": 0.15, "EVICT_RATIO": 0, "UNIQUE": 1, "ONETIMES": 1, "ZIPF_S": 1,  "MAX_REF": 0},
+						{"PATH": "/media/0/Android/data/com.alibaba.aliexpresshd/files/logs/", "MAX_CACHE": 0.001, "EVICT_RATIO": 0, "UNIQUE": 0.666667, "ONETIMES": 0.5, "ZIPF_S": 0,  "MAX_REF": 1}
+					]
+				},
+				{"NAME": "trivago", "PATH": "new_part/trace-mmap/trivago", 
+				"PS_NAME": "com.trivago", "LOADING_FILE":7,
+				"LOADING_CYCLE":2.35,
+				"CACHE":
+					[
+						{"PATH": "/data/com.trivago/cache/image_manager_disk_cache/", "MAX_CACHE": 250, "EVICT_RATIO": 0, "UNIQUE": 0.589365, "ONETIMES": 0.847118, "ZIPF_S": 0.789275,  "MAX_REF": 13},
+						{"PATH": "/media/0/Android/data/com.trivago/cache/cache_vts_com.trivago_default.0/", "MAX_CACHE": 10, "EVICT_RATIO": 0, "UNIQUE": 0.0598802, "ONETIMES": 0, "ZIPF_S": 1.23128,  "MAX_REF": 41}
+					]
+				},
+				{"NAME": "melon", "PATH": "new_part/trace-mmap/melon", 
+				"PS_NAME": "com.iloen.melon", "LOADING_FILE":7,
+				"LOADING_CYCLE":4,
+				"CACHE":
+					[
+						{"PATH": "/data/com.iloen.melon/cache/.http/", "MAX_CACHE": 0.002, "EVICT_RATIO": 0, "UNIQUE": 0.485455, "ONETIMES": 0.531835, "ZIPF_S": 0.581629,  "MAX_REF": 9},
+						{"PATH": "/data/com.iloen.melon/cache/http/", "MAX_CACHE": 5, "EVICT_RATIO": 0, "UNIQUE": 0.270607, "ONETIMES": 0.301603, "ZIPF_S": 0.802785,  "MAX_REF": 73},
+						{"PATH": "/data/com.iloen.melon/files/.Fabric", "MAX_CACHE": 0.005, "EVICT_RATIO": 0, "UNIQUE": 0.918367, "ONETIMES": 0.977778, "ZIPF_S": 0,  "MAX_REF": 4}
+					]
+				}
+		]
+	},
+	"PROCESS":
+	{
+		"INSTALL":
+		["android.process.acore", 
+		 "android.process.media",
+		 "com.android.vending",
+		 "com.google.android.googlequicksearchbox:interactor",
+		 "com.google.android.inputmethod.korean",
+		 "com.google.android.videos",
+		 "com.google.process.gapps",
+		 "system"
+		],
+		"UPDATE":
+		[
+			"android.process.acore",
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"google.android.instantapps.supervisor",
+			"com.android.defcontainer",
+			"com.google.android.videos",
+			"system"
+		],
+		"LOADING":
+		[
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"system"
+		],
+		"UNINSTALL":
+		[
+			"android.process.acore",
+			"com.android.vending",
+			"com.google.android.googlequicksearchbox:interactor",
+			"com.google.process.gapps",
+			"system"
+		]
+	},
+	"FULLDISK":
+	{
+		"LIMIT": 98.0,
+		"UNINSTALL_APP": 1,
+		"CAMERA_DELETE": 40,
+		"MUL_DELETE": [
+			{"NAME":"movie", "DELETE":1},
+			{"NAME":"music", "DELETE":10}
+		]
+	}
+}

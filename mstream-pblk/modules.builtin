@@ -1,0 +1,2 @@
+kernel/drivers/lightnvm/rrpc.ko
+kernel/drivers/lightnvm/pblk.ko
